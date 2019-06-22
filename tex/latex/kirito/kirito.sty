@@ -1,0 +1,827 @@
+%This is a package modified from Evan Chen's `evan.sty` file, visit
+%https://github.com/vEnhance for more information.
+\ProvidesPackage{kirito}
+\usepackage{amsmath,amssymb}
+%%fakesection Argument processing
+% Default Arguments
+% We include "Kirito" in all of these to make sure
+% that they don't collide with anything in external packages
+\newif\ifkiritofancy\kiritofancytrue
+\newif\ifkiritohdr\kiritohdrtrue
+\newif\ifkiritohref\kiritohreftrue
+\newif\ifkiritosetup\kiritosetuptrue
+\newif\ifkiritothm\kiritothmtrue
+\newif\ifkiritosecthm\kiritosecthmfalse
+\newif\ifkiritoht\kiritohtfalse
+\newif\ifkiritopkg\kiritopkgtrue
+\newif\ifkiritopdf\kiritopdftrue
+\newif\ifkiritotitling\kiritotitlingtrue
+\newif\ifkiritoauthor\kiritoauthortrue
+\newif\ifkiritochinese\kiritochinesefalse
+\newif\ifkiritomdthm\kiritomdthmfalse
+\newif\ifkiritodiagrams\kiritodiagramsfalse
+\newif\ifkiritopatchasy\kiritopatchasyfalse
+\newif\ifkiritohints\kiritohintsfalse
+\newif\ifkiritoasy\kiritoasytrue
+\newif\ifkiritocolorsec\kiritocolorsecfalse
+\newif\ifkiritotitlemark\kiritotitlemarktrue
+\newif\ifkiritosibthm\kiritosibthmtrue
+
+%Receive Arguments
+\DeclareOption{chinese}{\kiritohreffalse\kiritochinesetrue} % Chinese support
+% allow href to override this one
+
+\DeclareOption{sexy}{\kiritosecthmtrue\kiritomdthmtrue\kiritocolorsectrue} % long docs
+
+\DeclareOption{fancy}{\kiritofancytrue}
+\DeclareOption{nofancy}{\kiritofancyfalse}
+\DeclareOption{hdr}{\kiritohdrtrue}
+\DeclareOption{nohdr}{\kiritohdrfalse}
+\DeclareOption{href}{\kiritohreftrue}
+\DeclareOption{nohref}{\kiritohreffalse}
+
+\DeclareOption{nosetup}{\kiritosetupfalse}
+\DeclareOption{thm}{\kiritothmtrue}
+\DeclareOption{nothm}{\kiritothmfalse}
+\DeclareOption{secthm}{\kiritosecthmtrue}
+\DeclareOption{nosecthm}{\kiritosecthmfalse}
+
+\DeclareOption{ht}{\kiritohttrue}
+\DeclareOption{nopdf}{\kiritopdffalse}
+\DeclareOption{nopkg}{\kiritopkgfalse}
+\DeclareOption{oldtitle}{\kiritotitlingfalse}
+\DeclareOption{newtitle}{\kiritotitlingtrue}
+\DeclareOption{noauthor}{\kiritoauthorfalse}
+\DeclareOption{titlemark}{\kiritotitlemarktrue} % Sets title in ohead, not \rightmark
+\DeclareOption{sectionmark}{\kiritotitlemarkfalse} % Uses \rightmark not title in ohead
+
+\DeclareOption{mdthm}{\kiritomdthmtrue}
+\DeclareOption{nomdthm}{\kiritomdthmfalse}
+\DeclareOption{diagrams}{\kiritodiagramstrue}
+\DeclareOption{nodiagrams}{\kiritodiagramsfalse}
+\DeclareOption{colorsec}{\kiritocolorsectrue}
+\DeclareOption{nocolorsec}{\kiritocolorsecfalse}
+
+\DeclareOption{patchasy}{\kiritopatchasytrue}
+\DeclareOption{noasy}{\kiritoasyfalse}
+
+\DeclareOption{hints}{\kiritohintstrue}
+
+\DeclareOption{sibthm}{\kiritosibthmtrue}
+\DeclareOption{nosibthm}{\kiritosibthmfalse}
+
+\ProcessOptions\relax
+
+% if packages not loaded, turn off mdthm and asy
+\ifkiritopkg\else\kiritomdthmfalse\fi
+\ifkiritopkg\else\kiritoasyfalse\fi
+
+% If no setup, turn off theorems
+\ifkiritosetup\else\kiritothmfalse\fi
+
+%%fakesection Some macros
+%Small commands
+\newcommand{\cbrt}[1]{\sqrt[3]{#1}}
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceiling}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\mailto}[1]{\href{mailto:#1}{\texttt{#1}}}
+\newcommand{\ol}{\overline}
+\newcommand{\ul}{\underline}
+\newcommand{\wt}{\widetilde}
+\newcommand{\wh}{\widehat}
+\newcommand{\eps}{\varepsilon}
+%\renewcommand{\iff}{\Leftrightarrow}
+%\renewcommand{\implies}{\Rightarrow}
+\newcommand{\vocab}[1]{\textbf{\color{blue} #1}}
+\newcommand{\catname}{\mathsf}
+\newcommand{\hrulebar}{
+  \par\hspace{\fill}\rule{0.95\linewidth}{.7pt}\hspace{\fill}
+  \par\nointerlineskip \vspace{\baselineskip}
+}
+\newcommand{\half}{\frac{1}{2}}
+
+%For use in author command
+\newcommand{\plusemail}[1]{\\ \normalfont \texttt{\mailto{#1}}}
+
+%Re-order numbering layers in `enumerate` enviroment
+\renewcommand{\labelenumi}{(\alph{enumi})}
+
+%More commands and math operators
+\DeclareMathOperator{\cis}{cis}
+\DeclareMathOperator*{\lcm}{lcm}
+\DeclareMathOperator*{\argmin}{arg min}
+\DeclareMathOperator*{\argmax}{arg max}
+
+%Convenient Environments
+\newenvironment{soln}{\begin{proof}[Solution]}{\end{proof}}
+\newenvironment{parlist}{\begin{inparaenum}[(i)]}{\end{inparaenum}}
+\newenvironment{gobble}{\setbox\z@\vbox\bgroup}{\egroup}
+
+%Inequalities
+\newcommand{\cycsum}{\sum_{\mathrm{cyc}}}
+\newcommand{\symsum}{\sum_{\mathrm{sym}}}
+\newcommand{\cycprod}{\prod_{\mathrm{cyc}}}
+\newcommand{\symprod}{\prod_{\mathrm{sym}}}
+
+%From H113 "Introduction to Abstract Algebra" at UC Berkeley
+\newcommand{\CC}{\mathbb C}
+\newcommand{\FF}{\mathbb F}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\charin}{\text{ char }}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\Inn}{Inn}
+\DeclareMathOperator{\Syl}{Syl}
+\DeclareMathOperator{\Gal}{Gal}
+\DeclareMathOperator{\GL}{GL} % General linear group
+\DeclareMathOperator{\SL}{SL} % Special linear group
+
+%From Kiran Kedlaya's "Geometry Unbound"
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\dang}{\measuredangle} %% Directed angle
+\newcommand{\ray}[1]{\overrightarrow{#1}}
+\newcommand{\seg}[1]{\overline{#1}}
+\newcommand{\arc}[1]{\wideparen{#1}}
+
+%From M275 "Topology" at SJSU
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\taking}[1]{\xrightarrow{#1}}
+\newcommand{\inv}{^{-1}}
+
+%From M170 "Introduction to Graph Theory" at SJSU
+\DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\ord}{ord}
+\newcommand{\defeq}{\overset{\mathrm{def}}{=}}
+
+%From the USAMO .tex filse
+\newcommand{\st}{^{\text{st}}}
+\newcommand{\nd}{^{\text{nd}}}
+\renewcommand{\th}{^{\text{th}}}
+\newcommand{\dg}{^\circ}
+\newcommand{\ii}{\item}
+
+% From Math 55 and Math 145 at Harvard
+\newenvironment{subproof}[1][Proof]{%
+\begin{proof}[#1] \renewcommand{\qedsymbol}{$\blacksquare$}}%
+{\end{proof}}
+
+\newcommand{\liff}{\leftrightarrow}
+\newcommand{\lthen}{\rightarrow}
+\newcommand{\opname}{\operatorname}
+\newcommand{\surjto}{\twoheadrightarrow}
+\newcommand{\injto}{\hookrightarrow}
+\newcommand{\On}{\mathrm{On}} % ordinals
+\DeclareMathOperator{\img}{im} % Image
+\DeclareMathOperator{\Img}{Im} % Image
+\DeclareMathOperator{\coker}{coker} % Cokernel
+\DeclareMathOperator{\Coker}{Coker} % Cokernel
+\DeclareMathOperator{\Ker}{Ker} % Kernel
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Spec}{Spec} % spectrum
+\DeclareMathOperator{\Tr}{Tr} % trace
+\DeclareMathOperator{\pr}{pr} % projection
+\DeclareMathOperator{\ext}{ext} % extension
+\DeclareMathOperator{\pred}{pred} % predecessor
+\DeclareMathOperator{\dom}{dom} % domain
+\DeclareMathOperator{\ran}{ran} % range
+\DeclareMathOperator{\Hom}{Hom} % homomorphism
+\DeclareMathOperator{\End}{End} % endomorphism
+
+% Things Lie
+\newcommand{\kb}{\mathfrak b}
+\newcommand{\kg}{\mathfrak g}
+\newcommand{\kh}{\mathfrak h}
+\newcommand{\kn}{\mathfrak n}
+\newcommand{\ku}{\mathfrak u}
+\newcommand{\kz}{\mathfrak z}
+\DeclareMathOperator{\Ext}{Ext} % Ext functor
+\DeclareMathOperator{\Tor}{Tor} % Tor functor
+\newcommand{\gl}{\opname{\mathfrak{gl}}} % frak gl group
+\renewcommand{\sl}{\opname{\mathfrak{sl}}} % frak gl group
+
+% More script letters etc.
+\newcommand{\SA}{\mathscr A}
+\newcommand{\SB}{\mathscr B}
+\newcommand{\SC}{\mathscr C}
+\newcommand{\SD}{\mathscr D}
+\newcommand{\SE}{\mathscr E}
+\newcommand{\SF}{\mathscr F}
+\newcommand{\SG}{\mathscr G}
+\newcommand{\SH}{\mathscr H}
+\newcommand{\OO}{\mathcal O}
+
+%% Napkin commands
+\newcommand{\prototype}[1]{
+	\emph{{\color{red} Prototypical example for this section:} #1} \par\medskip
+}
+\newenvironment{moral}{%
+	\begin{mdframed}[linecolor=green!70!black]%
+	\bfseries\color{green!70!black}}%
+	{\end{mdframed}}
+
+
+
+%%fakesection Asymptote setup
+\ifkiritoasy
+	\ifkiritopatchasy
+		\usepackage{patch-asy}
+	\else
+		\usepackage{asymptote}
+	\fi
+	\begin{asydef}
+		import olympiad;
+		import cse5;
+		pointpen = black;
+		pathpen = black;
+		pathfontpen = black;
+		anglepen = black;
+		anglefontpen = black;
+		pointfontsize = 10;
+		defaultpen(fontsize(10pt));
+		size(8cm); // set a reasonable default
+		usepackage("amsmath");
+		usepackage("amssymb");
+		settings.tex="latex";
+		settings.outformat="pdf";
+	\end{asydef}
+\fi
+\ifkiritothm
+	\usepackage{amsthm}
+\fi
+
+%%fakesection BEGIN MAIN SETUP
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifkiritosetup
+	%%fakesection Set up author and date
+	\ifkiritoauthor
+		\AtBeginDocument{%
+			\author{Roger Fu}
+			\date{\today}
+		}
+	\fi
+	%%fakesection Hyperref
+	\ifkiritopkg
+		\PassOptionsToPackage{usenames,svgnames,dvipsnames}{xcolor}
+		\usepackage{xcolor}
+		\ifkiritohref
+			\usepackage[colorlinks=true]{hyperref}
+			\hypersetup{urlcolor=RubineRed,linkcolor=RoyalBlue,citecolor=ForestGreen}
+		\fi
+		\usepackage[nameinlink]{cleveref}
+	\fi
+
+	%%fakesection New Theorem Styles -- mdbluebox, mdredbox, mdgreenbox, mdblackbox, mdinlinebox
+	\ifkiritomdthm
+		\usepackage{thmtools}
+		\usepackage[framemethod=TikZ]{mdframed}
+
+		\mdfdefinestyle{mdbluebox}{%
+			%roundcorner=10pt,
+			%linewidth=1pt,
+			%skipabove=12pt,
+			%innerbottommargin=9pt,
+			%skipbelow=2pt,
+			%linecolor=blue,
+			%nobreak=true,
+			%backgroundcolor=TealBlue!5,
+			skipabove=8pt,
+			linewidth=2pt,
+			rightline=false,
+			leftline=true,
+			topline=false,
+			bottomline=false,
+			linecolor=MidnightBlue,
+			backgroundcolor=TealBlue!5,
+		}
+		\declaretheoremstyle[
+			headfont=\sffamily\bfseries\color{MidnightBlue},
+			mdframed={style=mdbluebox},
+			headpunct={\\[3pt]},
+			postheadspace={0pt}
+		]{thmbluebox}
+
+		\mdfdefinestyle{mdredbox}{%
+			%roundcorner=10pt,
+			%linewidth=1pt,
+			%skipabove=12pt,
+			%frametitleaboveskip=5pt,
+			%frametitlebelowskip=0pt,
+			%skipbelow=2pt,
+			%frametitlefont=\bfseries,
+			%innertopmargin=4pt,
+			%innerbottommargin=8pt,
+			%nobreak=true,
+			%backgroundcolor=RedViolet!5,
+			%linecolor=RedViolet,
+			skipabove=8pt,
+			linewidth=2pt,
+			rightline=false,
+			leftline=true,
+			topline=false,
+			bottomline=false,
+			linecolor=RedViolet,
+			backgroundcolor=Thistle!15,
+		}
+		\declaretheoremstyle[
+			headfont=\bfseries\color{RedViolet!75!Black},
+			mdframed={style=mdredbox},
+			headpunct={\\[3pt]},
+			postheadspace={0pt},
+		]{thmredbox}
+
+		\mdfdefinestyle{mdgreenbox}{%
+			linewidth=2pt,
+			skipabove=8pt,
+			rightline=false,
+			leftline=true,
+			topline=false,
+			bottomline=false,
+			linecolor=ForestGreen,
+			backgroundcolor=ForestGreen!5,
+		}
+		\declaretheoremstyle[
+			headfont=\sffamily\bfseries\color{ForestGreen!70!Black},
+			spaceabove=0pt,
+			spacebelow=0pt,
+			mdframed={style=mdgreenbox},
+		]{thmgreenbox}
+
+		\mdfdefinestyle{mdblackbox}{%
+			skipabove=8pt,
+			linewidth=2pt,
+			rightline=false,
+			leftline=true,
+			topline=false,
+			bottomline=false,
+			linecolor=black,
+			backgroundcolor=gray!10,
+		}
+		\declaretheoremstyle[
+			headfont=\bfseries,
+			spaceabove=0pt,
+			spacebelow=0pt,
+			mdframed={style=mdblackbox}
+		]{thmblackbox}
+
+		\mdfdefinestyle{mdinlinebox}{%
+			skipabove=8pt,
+			linewidth=3pt,
+			rightline=false,
+			leftline=true,
+			topline=false,
+			bottomline=false,
+			linecolor=green,
+			backgroundcolor=green!2
+		}
+		\declaretheoremstyle[
+			headfont=\bfseries\color{Cerulean},
+			bodyfont=\normalfont\small,
+			spaceabove=0pt,
+			spacebelow=0pt,
+			mdframed={style=mdinlinebox}
+		]{thminlinebox}
+
+		\newcommand{\listhack}{$\empty$\vspace{-2em}}
+	\fi
+
+	%%fakesection Theorem setup
+	\ifkiritothm
+		\theoremstyle{plain}
+		%Branching here: the option secthm changes theorems to be labelled by section
+		\ifkiritomdthm
+			\ifkiritosecthm
+				\declaretheorem[%
+				style=thmbluebox,name=Theorem,numberwithin=section]{theorem}
+			\else
+				\declaretheorem[%
+				style=thmbluebox,name=Theorem]{theorem}
+			\fi
+            \ifkiritosibthm
+                \declaretheorem[style=thmbluebox,name=Lemma,sibling=theorem]{lemma}
+                \declaretheorem[style=thmbluebox,name=Proposition,sibling=theorem]{proposition}
+                \declaretheorem[style=thmbluebox,name=Corollary,sibling=theorem]{corollary}
+                \declaretheorem[style=thmbluebox,name=Conjecture,sibling=theorem]{conjecture}
+                \declaretheorem[style=thmbluebox,name=Criterion,sibling=theorem]{criterion}
+                \declaretheorem[style=thmbluebox,name=Assertion,sibling=theorem]{assertion}
+            \else
+                \declaretheorem[style=thmbluebox,name=Lemma]{lemma}
+                \declaretheorem[style=thmbluebox,name=Proposition]{proposition}
+                \declaretheorem[style=thmbluebox,name=Corollary]{corollary}
+                \declaretheorem[style=thmbluebox,name=Conjecture]{conjecture}
+                \declaretheorem[style=thmbluebox,name=Criterion]{criterion}
+                \declaretheorem[style=thmbluebox,name=Assertion]{assertion}
+            \fi
+			\declaretheorem[style=thmbluebox,name=Theorem,numbered=no]{theorem*}
+			\declaretheorem[style=thmbluebox,name=Lemma,numbered=no]{lemma*}
+			\declaretheorem[style=thmbluebox,name=Proposition,numbered=no]{proposition*}
+			\declaretheorem[style=thmbluebox,name=Corollary,numbered=no]{corollary*}
+			\declaretheorem[style=thmbluebox,name=Conjecture,numbered=no]{conjecture*}
+			\declaretheorem[style=thmbluebox,name=Criterion,numbered=no]{criterion*}
+			\declaretheorem[style=thmbluebox,name=Assertion,numbered=no]{assertion*}
+		\else
+			\ifkiritosecthm
+				\newtheorem{theorem}{Theorem}[section]
+			\else
+				\newtheorem{theorem}{Theorem}
+			\fi
+            \ifkiritosibthm
+                \newtheorem{lemma}[theorem]{Lemma}
+                \newtheorem{proposition}[theorem]{Proposition}
+                \newtheorem{corollary}[theorem]{Corollary}
+                \newtheorem{conjecture}[theorem]{Conjecture}
+                \newtheorem{criterion}[theorem]{Criterion}
+                \newtheorem{assertion}[theorem]{Assertion}
+            \else
+                \newtheorem{lemma}{Lemma}
+                \newtheorem{proposition}{Proposition}
+                \newtheorem{corollary}{Corollary}
+                \newtheorem{conjecture}{Conjecture}
+                \newtheorem{criterion}{Criterion}
+                \newtheorem{assertion}{Assertion}
+            \fi
+			\newtheorem*{theorem*}{Theorem}
+			\newtheorem*{lemma*}{Lemma}
+			\newtheorem*{proposition*}{Proposition}
+			\newtheorem*{corollary*}{Corollary}
+			\newtheorem*{conjecture*}{Conjecture}
+			\newtheorem*{criterion*}{Criterion}
+			\newtheorem*{assertion*}{Assertion}
+		\fi
+
+		%Def-style theorems
+		\theoremstyle{definition}
+
+		% This ought to be a real theorem, but would be too much italics
+		\ifkiritomdthm
+            \ifkiritosibthm
+                \declaretheorem[style=thmbluebox,name=Algorithm,sibling=theorem]{algorithm}
+            \else
+                \declaretheorem[style=thmbluebox,name=Algorithm]{algorithm}
+            \fi
+		\else
+            \ifkiritosibthm
+                \newtheorem{algorithm}[theorem]{Algorithm}
+            \else
+                \newtheorem{algorithm}{Algorithm}
+            \fi
+			\newtheorem*{algorithm*}{Algorithm}
+		\fi
+
+		\ifkiritomdthm
+            \ifkiritosibthm
+                \declaretheorem[style=thmblackbox,name=Definition,sibling=theorem]{definition}
+                \declaretheorem[style=thmblackbox,name=Question,sibling=theorem]{question}
+                \declaretheorem[style=thmblackbox,name=Exercise,sibling=theorem]{exercise}
+                \declaretheorem[style=thmblackbox,name=Condition,sibling=theorem]{condition}
+                \declaretheorem[style=thmblackbox,name=Problem,sibling=theorem]{problem}
+                \declaretheorem[style=thmblackbox,name=Axiom,sibling=theorem]{axiom}
+                \declaretheorem[style=thmblackbox,name=Property,sibling=theorem]{property}
+                \declaretheorem[style=thmblackbox,name=Assumption,sibling=theorem]{assumption}
+                \declaretheorem[style=thmblackbox,name=Hypothesis,sibling=theorem]{hypothesis}
+            \else
+                \declaretheorem[style=thmblackbox,name=Definition]{definition}
+                \declaretheorem[style=thmblackbox,name=Question]{question}
+                \declaretheorem[style=thmblackbox,name=Exercise]{exercise}
+                \declaretheorem[style=thmblackbox,name=Condition]{condition}
+                \declaretheorem[style=thmblackbox,name=Problem]{problem}
+                \declaretheorem[style=thmblackbox,name=Axiom]{axiom}
+                \declaretheorem[style=thmblackbox,name=Property]{property}
+                \declaretheorem[style=thmblackbox,name=Assumption]{assumption}
+                \declaretheorem[style=thmblackbox,name=Hypothesis]{hypothesis}
+            \fi
+			\declaretheorem[style=thmblackbox,name=Definition,numbered=no]{definition*}
+			\declaretheorem[style=thmblackbox,name=Question,numbered=no]{question*}
+			\declaretheorem[style=thmblackbox,name=Exercise,numbered=no]{exercise*}
+			\declaretheorem[style=thmblackbox,name=Answer,numbered=no]{answer*}
+			\declaretheorem[style=thmblackbox,name=Condition,numbered=no]{condition*}
+			\declaretheorem[style=thmblackbox,name=Axiom,numbered=no]{axiom*}
+			\declaretheorem[style=thmblackbox,name=Property,numbered=no]{property*}
+			\declaretheorem[style=thmblackbox,name=Assumption,numbered=no]{assumption*}
+			\declaretheorem[style=thmblackbox,name=Hypothesis,numbered=no]{hypothesis*}
+			\declaretheorem[style=thmblackbox,name=Joke,numbered=no]{joke*}
+		\else
+            \ifkiritosibthm
+                \newtheorem{definition}[theorem]{Definition}
+                \newtheorem{problem}[theorem]{Problem}
+                \newtheorem{exercise}[theorem]{Exercise}
+                \newtheorem{question}[theorem]{Question}
+                \newtheorem{answer}[theorem]{Answer}
+                \newtheorem{axiom}[theorem]{Axiom}
+                \newtheorem{fact}[theorem]{Fact}
+                \newtheorem{property}[theorem]{Property}
+                \newtheorem{condition}[theorem]{Condition}
+                \newtheorem{assumption}[theorem]{Assumption}
+                \newtheorem{hypothesis}[theorem]{Hypothesis}
+            \else
+                \newtheorem{definition}{Definition}
+                \newtheorem{problem}{Problem}
+                \newtheorem{exercise}{Exercise}
+                \newtheorem{question}{Question}
+                \newtheorem{answer}{Answer}
+                \newtheorem{axiom}{Axiom}
+                \newtheorem{fact}{Fact}
+                \newtheorem{property}{Property}
+                \newtheorem{condition}{Condition}
+                \newtheorem{assumption}{Assumption}
+                \newtheorem{hypothesis}{Hypothesis}
+            \fi
+			\newtheorem*{definition*}{Definition}
+			\newtheorem*{problem*}{Problem}
+			\newtheorem*{exercise*}{Exercise}
+			\newtheorem*{question*}{Question}
+			\newtheorem*{answer*}{Answer}
+			\newtheorem*{axiom*}{Axiom}
+			\newtheorem*{fact*}{Fact}
+			\newtheorem*{property*}{Property}
+			\newtheorem*{condition*}{Condition}
+			\newtheorem*{assumption*}{Assumption}
+			\newtheorem*{hypothesis*}{Hypothesis}
+			\newtheorem*{joke*}{Joke}
+		\fi
+
+
+		\ifkiritomdthm
+            \ifkiritosibthm
+                \declaretheorem[style=thmredbox,name=Example,sibling=theorem]{example}
+            \else
+                \declaretheorem[style=thmredbox,name=Example]{example}
+            \fi
+			\declaretheorem[style=thmredbox,name=Example,numbered=no]{example*}
+		\else
+            \ifkiritosibthm
+                \newtheorem{example}[theorem]{Example}
+            \else
+                \newtheorem{example}{Example}
+            \fi
+			\newtheorem*{example*}{Example}
+		\fi
+
+		% Remark-style theorems
+		\theoremstyle{remark}
+		\ifkiritomdthm
+            \ifkiritosibthm
+                \declaretheorem[style=thmgreenbox,name=Remark,sibling=theorem]{remark}
+                \declaretheorem[style=thmgreenbox,name=Note,sibling=theorem]{note}
+                \declaretheorem[style=thmgreenbox,name=Notation,sibling=theorem]{notation}
+                \declaretheorem[style=thmgreenbox,name=Claim,sibling=theorem]{claim}
+                \declaretheorem[style=thmgreenbox,name=Summary,sibling=theorem]{summary}
+                \declaretheorem[style=thmgreenbox,name=Acknowledgment,sibling=theorem]{acknowledgment}
+                \declaretheorem[style=thmgreenbox,name=Case,sibling=theorem]{case}
+                \declaretheorem[style=thmgreenbox,name=Conclusion,sibling=theorem]{conclusion}
+                \declaretheorem[style=thmgreenbox,name=Abuse of Notation,sibling=theorem]{abuse}
+            \else
+                \declaretheorem[style=thmgreenbox,name=Remark]{remark}
+                \declaretheorem[style=thmgreenbox,name=Note]{note}
+                \declaretheorem[style=thmgreenbox,name=Notation]{notation}
+                \declaretheorem[style=thmgreenbox,name=Claim]{claim}
+                \declaretheorem[style=thmgreenbox,name=Summary]{summary}
+                \declaretheorem[style=thmgreenbox,name=Acknowledgment]{acknowledgment}
+                \declaretheorem[style=thmgreenbox,name=Case]{case}
+                \declaretheorem[style=thmgreenbox,name=Conclusion]{conclusion}
+                \declaretheorem[style=thmgreenbox,name=Abuse of Notation]{abuse}
+            \fi
+			\declaretheorem[style=thmgreenbox,name=Remark,numbered=no]{remark*}
+			\declaretheorem[style=thmgreenbox,name=Note,numbered=no]{note*}
+			\declaretheorem[style=thmgreenbox,name=Notation,numbered=no]{notation*}
+			\declaretheorem[style=thmgreenbox,name=Claim,numbered=no]{claim*}
+			\declaretheorem[style=thmgreenbox,name=Summary,numbered=no]{summary*}
+			\declaretheorem[style=thmgreenbox,name=Acknowledgment,numbered=no]{acknowledgment*}
+			\declaretheorem[style=thmgreenbox,name=Case,numbered=no]{case*}
+			\declaretheorem[style=thmgreenbox,name=Conclusion,numbered=no]{conclusion*}
+			\declaretheorem[style=thmgreenbox,name=Abuse of Notation,numbered=no]{abuse*}
+		\else
+            \ifkiritosibthm
+                \newtheorem{remark}[theorem]{Remark}
+                \newtheorem{note}[theorem]{Note}
+                \newtheorem{notation}[theorem]{Notation}
+                \newtheorem{claim}[theorem]{Claim}
+                \newtheorem{summary}[theorem]{Summary}
+                \newtheorem{acknowledgment}[theorem]{Acknowledgment}
+                \newtheorem{case}[theorem]{Case}
+                \newtheorem{conclusion}[theorem]{Conclusion}
+                \newtheorem{abuse}[theorem]{Abuse of Notation}
+            \else
+                \newtheorem{remark}{Remark}
+                \newtheorem{note}{Note}
+                \newtheorem{notation}{Notation}
+                \newtheorem{claim}{Claim}
+                \newtheorem{summary}{Summary}
+                \newtheorem{acknowledgment}{Acknowledgment}
+                \newtheorem{case}{Case}
+                \newtheorem{conclusion}{Conclusion}
+                \newtheorem{abuse}{Abuse of Notation}
+            \fi
+			\newtheorem*{remark*}{Remark}
+			\newtheorem*{note*}{Note}
+			\newtheorem*{notation*}{Notation}
+			\newtheorem*{claim*}{Claim}
+			\newtheorem*{summary*}{Summary}
+			\newtheorem*{acknowledgment*}{Acknowledgment}
+			\newtheorem*{case*}{Case}
+			\newtheorem*{conclusion*}{Conclusion}
+			\newtheorem*{abuse*}{Abuse of Notation}
+		\fi
+
+	%%fakesection Fancy section and chapter heads
+	\ifkiritocolorsec
+		\@ifundefined{KOMAClassName}{}{
+			\@ifundefined{chapter}{}{
+				\addtokomafont{partprefix}{\rmfamily}
+				\renewcommand*{\partformat}{\color{purple}
+					\scalebox{2.5}{\thepart}\enlargethispage{2em}}
+				\addtokomafont{chapterprefix}{\raggedleft}
+				\RedeclareSectionCommand[beforeskip=0.5em]{chapter}
+				\renewcommand*{\chapterformat}{\mbox{%
+					\scalebox{1.5}{\chapappifchapterprefix{\nobreakspace}}%
+					\scalebox{2.718}{\color{purple}\thechapter}\enskip}}
+			}
+			\renewcommand*{\sectionformat}%
+				{\color{purple}\S\thesection\enskip}
+			\renewcommand*{\subsectionformat}%
+				{\color{purple}\S\thesubsection\enskip}
+			\renewcommand*{\subsubsectionformat}%
+				{\color{purple}\S\thesubsubsection\enskip}
+			\KOMAoptions{numbers=noenddot}
+			\usepackage[tocindentauto]{tocstyle}
+			\usetocstyle{KOMAlike}
+		}
+	\fi
+
+
+	%%fakesection Loads a bunch of useful packages (but allow disabling)
+	\ifkiritopkg
+		\IfFileExists{von.sty}{\usepackage{von}}{}
+		\usepackage{listings}
+		\usepackage{mathrsfs}
+		\usepackage{textcomp}
+		\lstset{basicstyle=\footnotesize\ttfamily,
+			numbers=left,
+			numbersep=5pt,
+			numberstyle=\tiny,
+			keywordstyle=\bfseries,
+			% title=\lstname,
+			showstringspaces=false,
+			tabsize=4,
+			frame=single,
+			keywordstyle=\bfseries\color{blue},
+			commentstyle=\color{green!70!black},
+			identifierstyle=\color{green!20!black},
+			stringstyle=\color{orange},
+			breaklines=true,
+			breakatwhitespace=true,
+			frame=none
+		}
+		\usepackage[shortlabels]{enumitem}
+		\usepackage[obeyFinal,textsize=scriptsize,shadow]{todonotes}
+		\usepackage{textcomp}
+		% Tiny tiny optimizations:
+		\usepackage{mathtools}
+		\usepackage{microtype}
+	\fi
+
+	%%fakesection \maketitle configuration
+	\ifkiritotitling
+	%If we have titling...
+		\usepackage{titling}
+		\@ifundefined{KOMAClassName}{}{
+			\newcommand{\thesubtitle}{}
+			\@ifundefined{chapter}{
+				% No \chapter, so small style
+				\renewcommand{\subtitle}[1]{%
+					\renewcommand{\thesubtitle}{#1}
+					\pretitle{\begin{center}\bfseries \sffamily \Large}
+					\posttitle{\\ {\normalsize \thesubtitle} \end{center}\vspace{\posttitledrop}}
+				}
+			}{
+				% \chapter exists, so large style
+				\renewcommand{\subtitle}[1]{%
+					\renewcommand{\thesubtitle}{#1}
+					\pretitle{\begin{center}\bfseries \sffamily \Huge}
+					\posttitle{\\ {\Large \thesubtitle} \end{center}\vspace{\posttitledrop}}
+				}
+			}
+		}
+		\newlength{\posttitledrop}
+		\newlength{\postauthordrop}
+		\@ifundefined{chapter}{
+			% No \chapter, so small style
+			\setlength{\posttitledrop}{-0.7em}
+			\setlength{\postauthordrop}{-1.2em}
+			\pretitle{\begin{center}\bfseries \sffamily \Large}
+			\posttitle{\end{center}\vspace{\posttitledrop}}
+			\preauthor{\begin{center} \scshape}
+			\postauthor{\end{center}\vspace{\postauthordrop}}
+			\predate{\begin{center}\small}
+			\postdate{\end{center}}
+		}{
+			% \chapter exists, so large style
+			\setlength{\droptitle}{-8cm}
+			\setlength{\posttitledrop}{1em}
+			\setlength{\postauthordrop}{0.5em}
+			\pretitle{\begin{center}\bfseries \sffamily \Huge}
+			\posttitle{\end{center}\vspace{\posttitledrop}}
+			\preauthor{\begin{center} \scshape \LARGE}
+			\postauthor{\end{center}\vspace{\postauthordrop}}
+			\predate{\begin{center} \Large}
+			\postdate{\end{center}}
+		}
+	\fi
+
+	%%fakesection Commutative diagrams support
+	\ifkiritodiagrams
+		\usepackage{diagrams}
+		\newarrow{Inj}C--->
+		\newarrow{Surj}----{>>}
+		\newarrow{Proj}----{>>}
+		\newarrow{Embed}>--->
+		\newarrow{Incl}C--->
+		\newarrow{Mapsto}|--->
+		\newarrow{Isom}<--->
+		\newarrow{Dotted}....>
+		\newarrow{Dashed}{}{dash}{}{dash}>
+		\newarrow{Line}-----
+		\usepackage{tikz-cd}
+		\usetikzlibrary{decorations.pathmorphing}
+		\tikzcdset{row sep/normal=3.14em,column sep/normal=3.14em}
+	\fi
+
+	%%fakesection Page Setup
+	\ifkiritofancy
+		\@ifundefined{KOMAClassName}
+		{
+			\usepackage{fancyhdr}
+			\setlength{\headheight}{0.75in}
+			\setlength{\oddsidemargin}{0in}
+			\setlength{\evensidemargin}{0in}
+			\setlength{\voffset}{-1.0in}
+			\setlength{\headsep}{10pt}
+			\setlength{\textwidth}{6.5in}
+			\setlength{\headwidth}{6.5in}
+			\setlength{\textheight}{8.75in}
+			\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+			\setlength{\footskip}{0.3in}
+			\ifkiritotitling
+				\addtolength{\posttitledrop}{0.4em}
+				\addtolength{\postauthordrop}{0.2em}
+			\fi
+			\ifkiritohdr
+				\renewcommand{\headrulewidth}{0.5pt}
+				\renewcommand{\footrulewidth}{0.0pt}
+				\pagestyle{fancy}
+				\ifkiritotitling \lhead{\theauthor} \else \lhead{Roger Fu} \fi
+				\chead{}
+				\rhead{\nouppercase{\leftmark}}
+				\lfoot{}
+				\cfoot{\thepage}
+				\rfoot{}
+			\fi
+		}
+		{
+			\usepackage[headsepline]{scrlayer-scrpage}
+			\renewcommand{\headfont}{}
+			\addtolength{\textheight}{3.14cm}
+			\setlength{\footskip}{0.5in}
+			\setlength{\headsep}{10pt}
+			\ifkiritotitling
+				\ihead{\footnotesize\textbf{\theauthor} (\thedate)}
+				\else
+				\ihead{\footnotesize\textbf{Roger Fu} (\thedate)}
+			\fi
+			\automark{section}
+			\chead{}
+			\ifkiritotitlemark
+				\ohead{\footnotesize\textbf{\thetitle}}
+			\else
+				\ohead{\footnotesize\textbf{\headmark}}
+			\fi
+			\cfoot{\pagemark}
+		}
+	\fi
+
+	%%fakesection Chinese support
+	\ifkiritochinese
+		\usepackage[encapsulated]{CJK}
+		\usepackage{ucs}
+		\usepackage[utf8x]{inputenc}
+		\newenvironment{bsmi}{\begin{CJK}{UTF8}{bsmi}}{\end{CJK}}
+		\newcommand{\cn}[1]{\begin{bsmi}#1\end{bsmi}}
+		\AtBeginDocument{\begin{CJK}{UTF8}{bsmi}}
+		\AtEndDocument{\end{CJK}}
+	\fi
+
+	%%fakesection Hints
+	\ifkiritohints
+		\usepackage{answers}
+		\Newassociation{hint}{hintitem}{hints}
+		\renewcommand{\solutionextension}{out}
+		\Opensolutionfile{hints}
+		\newcommand{\makehints}{\Closesolutionfile{hints}\input{hints.out}}
+	\fi
+%%fakesection END MAIN SETUP
+\fi
