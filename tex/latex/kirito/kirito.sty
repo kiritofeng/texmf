@@ -329,15 +329,22 @@
 			linecolor=ForestGreen,
 			backgroundcolor=ForestGreen!5,
 		}
-		\declaretheoremstyle[
-			headfont=\sffamily\bfseries\color{ForestGreen!70!Black},
-			spaceabove=0pt,
-			spacebelow=0pt,
-			mdframed={style=mdgreenbox},
-			\ifkiritothmttl
-				headpunct={\\[3pt]},
-			\fi
-		]{thmgreenbox}
+		\ifkiritothmttl
+    		\declaretheoremstyle[
+    			headfont=\sffamily\bfseries\color{ForestGreen!70!Black},
+    			spaceabove=0pt,
+    			spacebelow=0pt,
+    			mdframed={style=mdgreenbox},
+    			headpunct={\\[3pt]},
+    		]{thmgreenbox}
+    	\else
+    		\declaretheoremstyle[
+    			headfont=\sffamily\bfseries\color{ForestGreen!70!Black},
+    			spaceabove=0pt,
+    			spacebelow=0pt,
+    			mdframed={style=mdgreenbox},
+    		]{thmgreenbox}
+		\fi
 
 		\mdfdefinestyle{mdblackbox}{%
 			skipabove=8pt,
@@ -349,15 +356,22 @@
 			linecolor=black,
 			backgroundcolor=gray!10,
 		}
-		\declaretheoremstyle[
-			headfont=\bfseries,
-			spaceabove=0pt,
-			spacebelow=0pt,
-			mdframed={style=mdblackbox}
-			\ifkiritothmttl
-				headpunct={\\[3pt]},
-			\fi
-		]{thmblackbox}
+		\ifkiritothmttl
+        	\declaretheoremstyle[
+        		headfont=\bfseries,
+        		spaceabove=0pt,
+        		spacebelow=0pt,
+        		mdframed={style=mdblackbox},
+        		headpunct={\\[3pt]},
+        	]{thmblackbox}
+		\else
+    		\declaretheoremstyle[
+    			headfont=\bfseries,
+    			spaceabove=0pt,
+    			spacebelow=0pt,
+    			mdframed={style=mdblackbox}
+    		]{thmblackbox}
+    	\fi
 
 		\mdfdefinestyle{mdinlinebox}{%
 			skipabove=8pt,
