@@ -26,6 +26,7 @@
 \newif\ifkiritocolorsec\kiritocolorsecfalse
 \newif\ifkiritotitlemark\kiritotitlemarktrue
 \newif\ifkiritosibthm\kiritosibthmtrue
+\newif\ifkiritothmttl\kiritothmttltrue
 
 %Receive Arguments
 \DeclareOption{chinese}{\kiritohreffalse\kiritochinesetrue} % Chinese support
@@ -69,6 +70,9 @@
 
 \DeclareOption{sibthm}{\kiritosibthmtrue}
 \DeclareOption{nosibthm}{\kiritosibthmfalse}
+
+\DeclareOption{thmttl}{\kiritothmttltrue}
+\DeclareOption{thmttl}{\kiritothmttlfalse}
 
 \ProcessOptions\relax
 
@@ -282,14 +286,6 @@
 		\usepackage[framemethod=TikZ]{mdframed}
 
 		\mdfdefinestyle{mdbluebox}{%
-			%roundcorner=10pt,
-			%linewidth=1pt,
-			%skipabove=12pt,
-			%innerbottommargin=9pt,
-			%skipbelow=2pt,
-			%linecolor=blue,
-			%nobreak=true,
-			%backgroundcolor=TealBlue!5,
 			skipabove=8pt,
 			linewidth=2pt,
 			rightline=false,
@@ -307,18 +303,6 @@
 		]{thmbluebox}
 
 		\mdfdefinestyle{mdredbox}{%
-			%roundcorner=10pt,
-			%linewidth=1pt,
-			%skipabove=12pt,
-			%frametitleaboveskip=5pt,
-			%frametitlebelowskip=0pt,
-			%skipbelow=2pt,
-			%frametitlefont=\bfseries,
-			%innertopmargin=4pt,
-			%innerbottommargin=8pt,
-			%nobreak=true,
-			%backgroundcolor=RedViolet!5,
-			%linecolor=RedViolet,
 			skipabove=8pt,
 			linewidth=2pt,
 			rightline=false,
@@ -350,6 +334,9 @@
 			spaceabove=0pt,
 			spacebelow=0pt,
 			mdframed={style=mdgreenbox},
+			\ifkiritothmttl
+				headpunct={\\[3pt]},
+			\fi
 		]{thmgreenbox}
 
 		\mdfdefinestyle{mdblackbox}{%
@@ -367,6 +354,9 @@
 			spaceabove=0pt,
 			spacebelow=0pt,
 			mdframed={style=mdblackbox}
+			\ifkiritothmttl
+				headpunct={\\[3pt]},
+			\fi
 		]{thmblackbox}
 
 		\mdfdefinestyle{mdinlinebox}{%
