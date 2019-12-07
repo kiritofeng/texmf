@@ -1,7 +1,7 @@
 %This is a package modified from Evan Chen's `evan.sty` file, visit
 %https://github.com/vEnhance for more information.
 \ProvidesPackage{kirito}
-\usepackage{amsmath,amssymb}
+\usepackage{amsmath,amssymb,physics,subfiles}
 %%fakesection Argument processing
 % Default Arguments
 % We include "Kirito" in all of these to make sure
@@ -118,6 +118,7 @@
 
 %Convenient Environments
 \newenvironment{soln}{\begin{proof}[Solution]}{\end{proof}}
+\newenvironment{motivation}{\begin{proof}[Motivation]\renewcommand{\qedsymbol}{}}{\end{proof}}
 \newenvironment{parlist}{\begin{inparaenum}[(i)]}{\end{inparaenum}}
 \newenvironment{gobble}{\setbox\z@\vbox\bgroup}{\egroup}
 
@@ -144,8 +145,8 @@
 \DeclareMathOperator{\SL}{SL} % Special linear group
 
 %From Kiran Kedlaya's "Geometry Unbound"
-\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
-\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+%\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+%\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
 \newcommand{\dang}{\measuredangle} %% Directed angle
 \newcommand{\ray}[1]{\overrightarrow{#1}}
 \newcommand{\seg}[1]{\overline{#1}}
@@ -184,9 +185,9 @@
 \DeclareMathOperator{\coker}{coker} % Cokernel
 \DeclareMathOperator{\Coker}{Coker} % Cokernel
 \DeclareMathOperator{\Ker}{Ker} % Kernel
-\DeclareMathOperator{\rank}{rank}
+%\DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator{\Spec}{Spec} % spectrum
-\DeclareMathOperator{\Tr}{Tr} % trace
+%\DeclareMathOperator{\Tr}{Tr} % trace
 \DeclareMathOperator{\pr}{pr} % projection
 \DeclareMathOperator{\ext}{ext} % extension
 \DeclareMathOperator{\pred}{pred} % predecessor
@@ -217,6 +218,33 @@
 \newcommand{\SG}{\mathscr G}
 \newcommand{\SH}{\mathscr H}
 \newcommand{\OO}{\mathcal O}
+
+% From MATH145 at Waterloo
+\newcommand{\UU}{\mathcal U}
+%\makeatletter
+%\def\legendre@dash#1#2{\hb@xt@#1{%
+%  \kern-#2\p@
+%  \cleaders\hbox{\kern.5\p@
+%    \vrule\@height.2\p@\@depth.2\p@\@width\p@
+%    \kern.5\p@}\hfil
+%  \kern-#2\p@
+%  }}
+%\def\@legendre#1#2#3#4#5{\mathopen{}\left(
+%  \sbox\z@{$\genfrac{}{}{0pt}{#1}{#3#4}{#3#5}$}%
+%  \dimen@=\wd\z@
+%  \kern-\p@\vcenter{\box0}\kern-\dimen@\vcenter{\legendre@dash\dimen@{#2}}\kern-\p@
+%  \right)\mathclose{}}
+%\newcommand\legendre[2]{\mathchoice
+%  {\@legendre{0}{1}{}{#1}{#2}}
+%  {\@legendre{1}{.5}{\vphantom{1}}{#1}{#2}}
+%  {\@legendre{2}{0}{\vphantom{1}}{#1}{#2}}
+%  {\@legendre{3}{0}{\vphantom{1}}{#1}{#2}}
+%}
+%\def\dlegendre{\@legendre{0}{1}{}}
+%\def\tlegendre{\@legendre{1}{0.5}{\vphantom{1}}}
+%\makeatother
+
+
 
 %% Napkin commands
 \newcommand{\prototype}[1]{
@@ -582,6 +610,7 @@
                 \declaretheorem[style=thmgreenbox,name=Case,sibling=theorem]{case}
                 \declaretheorem[style=thmgreenbox,name=Conclusion,sibling=theorem]{conclusion}
                 \declaretheorem[style=thmgreenbox,name=Abuse of Notation,sibling=theorem]{abuse}
+                \declaretheorem[style=thmgreenbox,name=Aside,sibling=theorem]{aside}
             \else
                 \declaretheorem[style=thmgreenbox,name=Remark]{remark}
                 \declaretheorem[style=thmgreenbox,name=Note]{note}
@@ -592,8 +621,10 @@
                 \declaretheorem[style=thmgreenbox,name=Case]{case}
                 \declaretheorem[style=thmgreenbox,name=Conclusion]{conclusion}
                 \declaretheorem[style=thmgreenbox,name=Abuse of Notation]{abuse}
+                \declaretheorem[style=thmgreenbox,name=Aside]{aside}
             \fi
 			\declaretheorem[style=thmgreenbox,name=Remark,numbered=no]{remark*}
+			\declaretheorem[style=thmgreenbox,name=Personal Remark,numbered=no]{premark*}
 			\declaretheorem[style=thmgreenbox,name=Note,numbered=no]{note*}
 			\declaretheorem[style=thmgreenbox,name=Notation,numbered=no]{notation*}
 			\declaretheorem[style=thmgreenbox,name=Claim,numbered=no]{claim*}
@@ -603,6 +634,7 @@
 			\declaretheorem[style=thmgreenbox,name=Conclusion,numbered=no]{conclusion*}
 			\declaretheorem[style=thmgreenbox,name=Abuse of Notation,numbered=no]{abuse*}
 			\declaretheorem[style=thmgreenbox,name=Recall,numbered=no]{recall*}
+			\declaretheorem[style=thmgreenbox,name=Aside,numbered=no]{aside*}
 		\else
             \ifkiritosibthm
                 \newtheorem{remark}[theorem]{Remark}
@@ -614,6 +646,7 @@
                 \newtheorem{case}[theorem]{Case}
                 \newtheorem{conclusion}[theorem]{Conclusion}
                 \newtheorem{abuse}[theorem]{Abuse of Notation}
+                \newtheorem{aside}[theorem]{Aside}
             \else
                 \newtheorem{remark}{Remark}
                 \newtheorem{note}{Note}
@@ -624,8 +657,10 @@
                 \newtheorem{case}{Case}
                 \newtheorem{conclusion}{Conclusion}
                 \newtheorem{abuse}{Abuse of Notation}
+                \newtheorem{aside}{Aside}
             \fi
 			\newtheorem*{remark*}{Remark}
+			\newtheorem*{premark*}{Personal Remark}
 			\newtheorem*{note*}{Note}
 			\newtheorem*{notation*}{Notation}
 			\newtheorem*{claim*}{Claim}
@@ -635,6 +670,7 @@
 			\newtheorem*{conclusion*}{Conclusion}
 			\newtheorem*{abuse*}{Abuse of Notation}
 			\newtheorem*{recall*}{Recall}
+			\newtheorem*{aside*}{Aside}
 		\fi
 
 	%%fakesection Fancy section and chapter heads
@@ -834,3 +870,8 @@
 	\fi
 %%fakesection END MAIN SETUP
 \fi
+
+%% Pretty math in section headings
+\makeatletter
+\g@addto@macro\bfseries{\boldmath}
+\makeatother
