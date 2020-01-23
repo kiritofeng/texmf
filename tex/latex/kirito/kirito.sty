@@ -1,7 +1,7 @@
 %This is a package modified from Evan Chen's `evan.sty` file, visit
 %https://github.com/vEnhance for more information.
 \ProvidesPackage{kirito}
-\usepackage{amsmath,amssymb,physics}
+\usepackage{amsmath,amssymb,sectsty,physics}
 %%fakesection Argument processing
 % Default Arguments
 % We include "Kirito" in all of these to make sure
@@ -244,7 +244,8 @@
 %\def\tlegendre{\@legendre{1}{0.5}{\vphantom{1}}}
 %\makeatother
 
-
+% From MATH146 lecture at UWaterloo
+\DeclareMathOperator{\spanset}{span}
 
 %% Napkin commands
 \newcommand{\prototype}[1]{
@@ -288,6 +289,8 @@
 %%fakesection BEGIN MAIN SETUP
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\allsectionsfont{\boldmath}
 
 \ifkiritosetup
     %%fakesection Set up author and date
@@ -646,6 +649,8 @@
                 \declaretheorem[style=thmgreenbox,name=Acknowledgment,sibling=theorem]{acknowledgment}
                 \declaretheorem[style=thmgreenbox,name=Case,sibling=theorem]{case}
                 \declaretheorem[style=thmgreenbox,name=Conclusion,sibling=theorem]{conclusion}
+                \declaretheorem[style=thmgreenbox,name=Consequence,sibling=theorem]{consequence}
+                \declaretheorem[style=thmgreenbox,name=Generalization,sibling=theorem]{generalization}
                 \declaretheorem[style=thmgreenbox,name=Abuse of Notation,sibling=theorem]{abuse}
                 \declaretheorem[style=thmgreenbox,name=Aside,sibling=theorem]{aside}
                 \declaretheorem[style=thmgreenbox,name=Postulate,sibling=theorem]{postulate}
@@ -658,6 +663,8 @@
                 \declaretheorem[style=thmgreenbox,name=Acknowledgment]{acknowledgment}
                 \declaretheorem[style=thmgreenbox,name=Case]{case}
                 \declaretheorem[style=thmgreenbox,name=Conclusion]{conclusion}
+                \declaretheorem[style=thmgreenbox,name=Consequence]{consequence}
+                \declaretheorem[style=thmgreenbox,name=Generalization]{generalization}
                 \declaretheorem[style=thmgreenbox,name=Abuse of Notation]{abuse}
                 \declaretheorem[style=thmgreenbox,name=Aside]{aside}
                 \declaretheorem[style=thmgreenbox,name=Postulate]{postulate}
@@ -671,6 +678,8 @@
             \declaretheorem[style=thmgreenbox,name=Acknowledgment,numbered=no]{acknowledgment*}
             \declaretheorem[style=thmgreenbox,name=Case,numbered=no]{case*}
             \declaretheorem[style=thmgreenbox,name=Conclusion,numbered=no]{conclusion*}
+            \declaretheorem[style=thmgreenbox,name=Consequence,numbered=no]{consequence*}
+            \declaretheorem[style=thmgreenbox,name=Generalization,numbered=no]{generalization*}
             \declaretheorem[style=thmgreenbox,name=Abuse of Notation,numbered=no]{abuse*}
             \declaretheorem[style=thmgreenbox,name=Recall,numbered=no]{recall*}
             \declaretheorem[style=thmgreenbox,name=Aside,numbered=no]{aside*}
@@ -685,6 +694,8 @@
                 \newtheorem{acknowledgment}[theorem]{Acknowledgment}
                 \newtheorem{case}[theorem]{Case}
                 \newtheorem{conclusion}[theorem]{Conclusion}
+                \newtheorem{consequence}[theorem]{Consequence}
+                \newtheorem{generalization}[theorem]{Generalization}
                 \newtheorem{abuse}[theorem]{Abuse of Notation}
                 \newtheorem{aside}[theorem]{Aside}
                 \newtheorem{postulate}[theorem]{Postulate}
@@ -697,6 +708,8 @@
                 \newtheorem{acknowledgment}{Acknowledgment}
                 \newtheorem{case}{Case}
                 \newtheorem{conclusion}{Conclusion}
+                \newtheorem{consequence}{Consequence}
+                \newtheorem{generalization}{Generalization}
                 \newtheorem{abuse}{Abuse of Notation}
                 \newtheorem{aside}{Aside}
                 \newtheorem{postulate}{Postulate}
@@ -710,6 +723,8 @@
             \newtheorem*{acknowledgment*}{Acknowledgment}
             \newtheorem*{case*}{Case}
             \newtheorem*{conclusion*}{Conclusion}
+            \newtheorem*{consequence*}{Consequence}
+            \newtheorem*{generalization*}{Generalization}
             \newtheorem*{abuse*}{Abuse of Notation}
             \newtheorem*{recall*}{Recall}
             \newtheorem*{aside*}{Aside}
@@ -913,8 +928,3 @@
     \fi
 %%fakesection END MAIN SETUP
 \fi
-
-%% Pretty math in section headings
-\makeatletter
-\g@addto@macro\bfseries{\boldmath}
-\makeatother
