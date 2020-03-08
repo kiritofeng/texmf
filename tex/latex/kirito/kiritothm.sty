@@ -1,0 +1,254 @@
+\ProvidesPackage{kiritothm}
+\RequirePackage[usenames,svgnames,dvipsnames]{xcolor}
+\RequirePackage{amsthm, thmtools}
+
+%%fakesection Argument processing
+% Default Arguments
+% We include "Kirito" in all of these to make sure
+% that they don't collide with anything in external packages
+\newif\ifkiritomdthm\kiritomdthmfalse
+\newif\ifkiritosecthm\kiritosecthmfalse
+\newif\ifkiritosibthm\kiritosibthmtrue
+\newif\ifkiritothmttl\kiritothmttltrue
+
+%Receive Arguments
+\DeclareOption{mdthm}{\kiritomdthmtrue}
+\DeclareOption{nomdthm}{\kiritomdthmfalse}
+
+\DeclareOption{secthm}{\kiritosibthmtrue}
+\DeclareOption{nosecthm}{\kiritosibthmfalse}
+
+\DeclareOption{sibthm}{\kiritosibthmtrue}
+\DeclareOption{nosibthm}{\kiritosibthmfalse}
+
+\DeclareOption{thmttl}{\kiritothmttltrue}
+\DeclareOption{nothmttl}{\kiritothmttlfalse}
+
+\ProcessOptions\relax
+
+%%fakesection New Theorem Styles -- mdbluebox, mdredbox, mdgreenbox, mdblackbox, mdinlinebox
+\ifkiritomdthm
+    \usepackage[framemethod=TikZ]{mdframed}
+
+    \mdfdefinestyle{mdbluebox}{%
+        skipabove=8pt,
+        linewidth=2pt,
+        rightline=false,
+        leftline=true,
+        topline=false,
+        bottomline=false,
+        linecolor=MidnightBlue,
+        backgroundcolor=TealBlue!5,
+    }
+    \declaretheoremstyle[
+        headfont=\sffamily\bfseries\color{MidnightBlue},
+        mdframed={style=mdbluebox},
+        headpunct={\\[3pt]},
+        postheadspace={0pt}
+    ]{thmbluebox}
+
+    \mdfdefinestyle{mdredbox}{%
+        skipabove=8pt,
+        linewidth=2pt,
+        rightline=false,
+        leftline=true,
+        topline=false,
+        bottomline=false,
+        linecolor=RedViolet,
+        backgroundcolor=Thistle!15,
+    }
+    \declaretheoremstyle[
+        headfont=\bfseries\color{RedViolet!75!Black},
+        mdframed={style=mdredbox},
+        headpunct={\\[3pt]},
+        postheadspace={0pt},
+    ]{thmredbox}
+
+    \mdfdefinestyle{mdgreenbox}{%
+        linewidth=2pt,
+        skipabove=8pt,
+        rightline=false,
+        leftline=true,
+        topline=false,
+        bottomline=false,
+        linecolor=ForestGreen,
+        backgroundcolor=ForestGreen!5,
+    }
+    \ifkiritothmttl
+        \declaretheoremstyle[
+            headfont=\sffamily\bfseries\color{ForestGreen!70!Black},
+            spaceabove=0pt,
+            spacebelow=0pt,
+            mdframed={style=mdgreenbox},
+            headpunct={\\[3pt]},
+        ]{thmgreenbox}
+    \else
+        \declaretheoremstyle[
+            headfont=\sffamily\bfseries\color{ForestGreen!70!Black},
+            spaceabove=0pt,
+            spacebelow=0pt,
+            mdframed={style=mdgreenbox},
+        ]{thmgreenbox}
+    \fi
+
+    \mdfdefinestyle{mdblackbox}{%
+        skipabove=8pt,
+        linewidth=2pt,
+        rightline=false,
+        leftline=true,
+        topline=false,
+        bottomline=false,
+        linecolor=black,
+        backgroundcolor=gray!10,
+    }
+    \ifkiritothmttl
+        \declaretheoremstyle[
+            headfont=\bfseries,
+            spaceabove=0pt,
+            spacebelow=0pt,
+            mdframed={style=mdblackbox},
+            headpunct={\\[3pt]},
+        ]{thmblackbox}
+    \else
+        \declaretheoremstyle[
+            headfont=\bfseries,
+            spaceabove=0pt,
+            spacebelow=0pt,
+            mdframed={style=mdblackbox}
+        ]{thmblackbox}
+    \fi
+
+    \mdfdefinestyle{mdinlinebox}{%
+        skipabove=8pt,
+        linewidth=3pt,
+        rightline=false,
+        leftline=true,
+        topline=false,
+        bottomline=false,
+        linecolor=green,
+        backgroundcolor=green!2
+    }
+    \declaretheoremstyle[
+        headfont=\bfseries\color{Cerulean},
+        bodyfont=\normalfont\small,
+        spaceabove=0pt,
+        spacebelow=0pt,
+        mdframed={style=mdinlinebox}
+    ]{thminlinebox}
+
+    \newcommand{\listhack}{$\empty$\vspace{-2em}}
+\fi
+
+%%fakesection Theorem setup
+\ifkiritomdthm
+    \theoremstyle{plain}
+    \ifkiritosecthm
+        \declaretheorem[%
+        style=thmbluebox,name=Theorem,numberwithin=section]{theorem}
+    \else
+        \declaretheorem[%
+        style=thmbluebox,name=Theorem]{theorem}
+    \fi
+    \makeatletter
+        \ifkiritosibthm
+        \newcommand*{\createtheorem}{\@ifstar\@createtheorem\@@createtheorem}
+        \newcommand*\@createtheorem[3]{\declaretheorem[style=#1,name=#2]{#3}}
+            \newcommand*\@@createtheorem[4]{\declaretheorem[style=#1,name=#2,sibling=#3]{#4}}
+        \else
+            \newcommand*\@@createtheorem[4]{\declaretheorem[style=#1,name=#2]{#4}}
+        \fi
+    \makeatother
+\else
+    \ifkiritosecthm
+        \newtheorem{theorem}{Theorem}[section]
+    \else
+        \newtheorem{theorem}{Theorem}
+    \fi
+    \makeatletter
+        \newcommand*{\createtheorem}{\@ifstar\@createtheorem\@@createtheorem}
+        \newcommand*{\@createtheorem}[3]{\newtheorem*{#3}{#2}}
+        \ifkiritosibthm
+            \newcommand*{\@@createtheorem}[4]{\newtheorem{#4}[#3]{#2}}
+        \else
+            \newcommand*{\@@createtheorem}[4]{\newtheorem{#4}{#2}}
+        \fi
+    \makeatother
+\fi
+
+\createtheorem{thmbluebox}{Lemma}{theorem}{lemma}
+\createtheorem{thmbluebox}{Proposition}{theorem}{proposition}
+\createtheorem{thmbluebox}{Corollary}{theorem}{corollary}
+\createtheorem{thmbluebox}{Criterion}{theorem}{criterion}
+\createtheorem{thmbluebox}{Assertion}{theorem}{assertion}
+
+\createtheorem*{thmbluebox}{Theorem}{theorem*}
+\createtheorem*{thmbluebox}{Lemma}{lemma*}
+\createtheorem*{thmbluebox}{Proposition}{proposition*}
+\createtheorem*{thmbluebox}{Corollary}{corollary*}
+\createtheorem*{thmbluebox}{Conjecture}{conjecture*}
+\createtheorem*{thmbluebox}{Criterion}{criterion*}
+\createtheorem*{thmbluebox}{Assertion}{assertion*}
+
+%Def-style theorems
+\theoremstyle{definition}
+
+% This ought to be a real theorem, but would be too much italics
+\createtheorem{thmbluebox}{Algorithm}{theorem}{algorithm}
+\createtheorem*{thmbluebox}{Algorithm}{algorithm*}
+
+\createtheorem{thmblackbox}{Definition}{theorem}{definition}
+\createtheorem{thmblackbox}{Question}{theorem}{question}
+\createtheorem{thmblackbox}{Exercise}{theorem}{exercise}
+\createtheorem{thmblackbox}{Condition}{theorem}{condition}
+\createtheorem{thmblackbox}{Problem}{theorem}{problem}
+\createtheorem{thmblackbox}{Axiom}{theorem}{axiom}
+\createtheorem{thmblackbox}{Fact}{theorem}{fact}
+\createtheorem{thmblackbox}{Property}{theorem}{property}
+\createtheorem{thmblackbox}{Assumption}{theorem}{assumption}
+\createtheorem{thmblackbox}{Hypothesis}{theorem}{hypothesis}
+
+\createtheorem*{thmblackbox}{Definition}{definition*}
+\createtheorem*{thmblackbox}{Question}{question*}
+\createtheorem*{thmblackbox}{Exercise}{exercise*}
+\createtheorem*{thmblackbox}{Condition}{condition*}
+\createtheorem*{thmblackbox}{Problem}{problem*}
+\createtheorem*{thmblackbox}{Axiom}{axiom*}
+\createtheorem*{thmblackbox}{Fact}{fact*}
+\createtheorem*{thmblackbox}{Property}{property*}
+\createtheorem*{thmblackbox}{Assumption}{assumption*}
+\createtheorem*{thmblackbox}{Hypothesis}{hypothesis*}
+\createtheorem*{thmblackbox}{Joke}{joke*}
+
+\createtheorem{thmredbox}{Example}{theorem}{example}
+\createtheorem*{thmredbox}{Example}{example*}
+
+% Remark-style theorems
+\theoremstyle{remark}
+\createtheorem{thmgreenbox}{Remark}{theorem}{remark}
+\createtheorem{thmgreenbox}{Note}{theorem}{note}
+\createtheorem{thmgreenbox}{Notation}{theorem}{notation}
+\createtheorem{thmgreenbox}{Claim}{theorem}{claim}
+\createtheorem{thmgreenbox}{Summary}{theorem}{summary}
+\createtheorem{thmgreenbox}{Acknowledgment}{theorem}{acknowledgment}
+\createtheorem{thmgreenbox}{Case}{theorem}{case}
+\createtheorem{thmgreenbox}{Conclusion}{theorem}{conclusion}
+\createtheorem{thmgreenbox}{Consequence}{theorem}{consequence}
+\createtheorem{thmgreenbox}{Generalization}{theorem}{generalization}
+\createtheorem{thmgreenbox}{Abuse of Notation}{theorem}{abuse}
+\createtheorem{thmgreenbox}{Aside}{theorem}{aside}
+\createtheorem{thmgreenbox}{Postulate}{theorem}{postulate}
+
+\createtheorem*{thmgreenbox}{Remark}{remark*}
+\createtheorem*{thmgreenbox}{Note}{note*}
+\createtheorem*{thmgreenbox}{Notation}{notation*}
+\createtheorem*{thmgreenbox}{Claim}{claim*}
+\createtheorem*{thmgreenbox}{Summary}{summary*}
+\createtheorem*{thmgreenbox}{Acknowledgment}{acknowledgment*}
+\createtheorem*{thmgreenbox}{Case}{case*}
+\createtheorem*{thmgreenbox}{Conclusion}{conclusion*}
+\createtheorem*{thmgreenbox}{Consequence}{consequence*}
+\createtheorem*{thmgreenbox}{Generalization}{generalization*}
+\createtheorem*{thmgreenbox}{Abuse of Notation}{abuse*}
+\createtheorem*{thmgreenbox}{Recall}{recall*}
+\createtheorem*{thmgreenbox}{Aside}{aside*}
+\createtheorem*{thmgreenbox}{Postulate}{postulate*}

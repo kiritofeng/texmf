@@ -1,7 +1,6 @@
 \ProvidesPackage{kiritosymb}
-\RequirePackage{physics}
 
-%Small commands
+%%fakesection Small commands
 \newcommand{\cbrt}[1]{\sqrt[3]{#1}}
 \newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
 \newcommand{\ceiling}[1]{\left\lceil #1 \right\rceil}
@@ -13,19 +12,19 @@
 \newcommand{\catname}{\mathsf}
 \newcommand{\half}{\frac{1}{2}}
 
-%More commands and math operators
+%%fakesection More commands and math operators
 \DeclareMathOperator{\cis}{cis}
 \DeclareMathOperator*{\lcm}{lcm}
 \DeclareMathOperator*{\argmin}{arg min}
 \DeclareMathOperator*{\argmax}{arg max}
 
-%Inequalities
+%%fakesection Inequalities
 \newcommand{\cycsum}{\sum_{\mathrm{cyc}}}
 \newcommand{\symsum}{\sum_{\mathrm{sym}}}
 \newcommand{\cycprod}{\prod_{\mathrm{cyc}}}
 \newcommand{\symprod}{\prod_{\mathrm{sym}}}
 
-%From H113 "Introduction to Abstract Algebra" at UC Berkeley
+%%fakesection From H113 "Introduction to Abstract Algebra" at UC Berkeley
 \newcommand{\CC}{\mathbb C}
 \newcommand{\FF}{\mathbb F}
 \newcommand{\NN}{\mathbb N}
@@ -41,30 +40,30 @@
 \DeclareMathOperator{\GL}{GL} % General linear group
 \DeclareMathOperator{\SL}{SL} % Special linear group
 
-%From Kiran Kedlaya's "Geometry Unbound"
+%%fakesection From Kiran Kedlaya's "Geometry Unbound"
 \newcommand{\dang}{\measuredangle} %% Directed angle
 \newcommand{\ray}[1]{\overrightarrow{#1}}
 \newcommand{\seg}[1]{\overline{#1}}
 \newcommand{\arc}[1]{\wideparen{#1}}
 
-%From M275 "Topology" at SJSU
+%%fakesection From M275 "Topology" at SJSU
 \newcommand{\id}{\mathrm{id}}
 \newcommand{\taking}[1]{\xrightarrow{#1}}
 \newcommand{\inv}{^{-1}}
 
-%From M170 "Introduction to Graph Theory" at SJSU
+%%fakesection From M170 "Introduction to Graph Theory" at SJSU
 \DeclareMathOperator{\diam}{diam}
 \DeclareMathOperator{\ord}{ord}
 \newcommand{\defeq}{\overset{\mathrm{def}}{=}}
 
-%From the USAMO .tex filse
+%%fakesection From the USAMO .tex filse
 \newcommand{\st}{^{\text{st}}}
 \newcommand{\nd}{^{\text{nd}}}
 \renewcommand{\th}{^{\text{th}}}
 \newcommand{\dg}{^\circ}
 \newcommand{\ii}{\item}
 
-% From Math 55 and Math 145 at Harvard
+%%fakesection From Math 55 and Math 145 at Harvard
 \newcommand{\liff}{\leftrightarrow}
 \newcommand{\lthen}{\rightarrow}
 \newcommand{\opname}{\operatorname}
@@ -85,7 +84,7 @@
 \DeclareMathOperator{\Hom}{Hom} % homomorphism
 \DeclareMathOperator{\End}{End} % endomorphism
 
-% Things Lie
+%%fakesection Things Lie
 \newcommand{\kb}{\mathfrak b}
 \newcommand{\kg}{\mathfrak g}
 \newcommand{\kh}{\mathfrak h}
@@ -97,7 +96,7 @@
 \newcommand{\gl}{\opname{\mathfrak{gl}}} % frak gl group
 \renewcommand{\sl}{\opname{\mathfrak{sl}}} % frak gl group
 
-% More script letters etc.
+%%fakesection More script letters etc.
 \newcommand{\SA}{\mathscr A}
 \newcommand{\SB}{\mathscr B}
 \newcommand{\SC}{\mathscr C}
@@ -108,7 +107,7 @@
 \newcommand{\SH}{\mathscr H}
 \newcommand{\OO}{\mathcal O}
 
-% From MATH145 at Waterloo
+%%fakesection From MATH145 at Waterloo
 \newcommand{\UU}{\mathcal U}
 \makeatletter
 \def\legendre@dash#1#2{\hb@xt@#1{%
@@ -133,5 +132,7 @@
 \def\tlegendre{\@legendre{1}{0.5}{\vphantom{1}}}
 \makeatother
 
-% From MATH146 lecture at UWaterloo
+%%fakesection From MATH146 lecture at UWaterloo
 \DeclareMathOperator{\spanset}{span}
+\DeclareMathOperator{\Col}{Col}
+\DeclareMathOperator{\Row}{Row}

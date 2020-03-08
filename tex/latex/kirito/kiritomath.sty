@@ -1,0 +1,15 @@
+\ProvidesPackage{kiritomath}
+
+\RequirePackage{amsmath, array}
+
+%%fakesection Special commands for array environment
+\newcolumntype{o}{>{{}}c<{{}}}
+\newcommand\vv{\multicolumn{1}{c}{\vdots}}
+
+%%fakesection Make *matrix more powerful
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
