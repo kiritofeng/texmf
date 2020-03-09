@@ -154,7 +154,6 @@
         style=thmbluebox,name=Theorem]{theorem}
     \fi
     \makeatletter
-        \ifkiritosibthm
         \newcommand*{\createtheorem}{\@ifstar\@createtheorem\@@createtheorem}
         \newcommand*\@createtheorem[3]{\declaretheorem[style=#1,name=#2,numbered=no]{#3}}
         \ifkiritosibthm
