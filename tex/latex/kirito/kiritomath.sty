@@ -13,3 +13,18 @@
   \let\@ifnextchar\new@ifnextchar
   \array{#1}}
 \makeatother
+
+%%fakesection Add variable explanation environment
+\newenvironment{where}[1][Where]{%
+    \par\noindent\textbf{#1:}\\*[\parskip]
+    \indent\begin{tabular}{>{$}l<{$} @{${}={}$} l}
+}{%
+    \end{tabular}
+}
+
+\newenvironment{where*}[1][Where]{%
+    \par\noindent\textbf{#1:}\\*[\parskip]
+    \tabularx{\columnwidth}{>{$}l<{$} @{${}={}$} >{\raggedright\arraybackslash}X}
+}{%
+    \endtabularx
+}
