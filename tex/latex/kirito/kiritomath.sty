@@ -2,6 +2,10 @@
 
 \RequirePackage{amsmath, array}
 
+%%fakesection commands to typeset lines in matrices
+\newcommand*{\vertbar}{\rule[-1ex]{0.5pt}{3.5ex}}
+\newcommand*{\horizbar}{\hspace*{2pt}\rule[.5ex]{3.5ex}{0.5pt}\hspace*{2pt}}
+
 %%fakesection Special commands for array environment
 \newcolumntype{o}{>{{}}c<{{}}}
 \newcommand\vv{\multicolumn{1}{c}{\vdots}}
