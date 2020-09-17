@@ -118,6 +118,61 @@
         ]{thmblackbox}
     \fi
 
+    \mdfdefinestyle{mdpurplebox}{%
+        skipabove=8pt,
+        linewidth=2pt,
+        rightline=false,
+        leftline=true,
+        topline=false,
+        bottomline=false,
+        linecolor=RoyalPurple!90,
+        backgroundcolor=Orchid!5,
+    }
+    \ifkiritothmttl
+        \declaretheoremstyle[
+            headfont=\sffamily\bfseries\color{RoyalPurple!90},
+            spaceabove=0pt,
+            spacebelow=0pt,
+            mdframed={style=mdpurplebox},
+            headpunct={\\[3pt]},
+        ]{thmpurplebox}
+    \else
+        \declaretheoremstyle[
+            headfont=\sffamily\bfseries\color{RoyalPurple!90},
+            headfont=\bfseries,
+            spaceabove=0pt,
+            spacebelow=0pt,
+            mdframed={style=mdpurplebox}
+        ]{thmpurplebox}
+    \fi
+
+    \mdfdefinestyle{mdwhitebox}{%
+        skipabove=8pt,
+        linewidth=2pt,
+        rightline=false,
+        leftline=true,
+        topline=false,
+        bottomline=false,
+        linecolor=black,
+        backgroundcolor=white,
+    }
+    \ifkiritothmttl
+        \declaretheoremstyle[
+            headfont=\bfseries,
+            spaceabove=0pt,
+            spacebelow=0pt,
+            mdframed={style=mdwhitebox},
+            headpunct={\\[3pt]},
+        ]{thmwhitebox}
+    \else
+        \declaretheoremstyle[
+            headfont=\bfseries,
+            spaceabove=0pt,
+            spacebelow=0pt,
+            mdframed={style=mdwhitebox}
+        ]{thmwhitebox}
+    \fi
+
     \mdfdefinestyle{mdinlinebox}{%
         skipabove=8pt,
         linewidth=3pt,
@@ -190,16 +245,15 @@
 \createtheorem*{thmbluebox}{Criterion}{criterion*}
 \createtheorem*{thmbluebox}{Assertion}{assertion*}
 
-%Def-style theorems
-\theoremstyle{definition}
-
 % This ought to be a real theorem, but would be too much italics
 \createtheorem{thmbluebox}{Algorithm}{theorem}{algorithm}
 \createtheorem*{thmbluebox}{Algorithm}{algorithm*}
 
+%Def-style theorems
+\theoremstyle{definition}
+
 \createtheorem{thmblackbox}{Definition}{theorem}{definition}
 \createtheorem{thmblackbox}{Question}{theorem}{question}
-\createtheorem{thmblackbox}{Exercise}{theorem}{exercise}
 \createtheorem{thmblackbox}{Condition}{theorem}{condition}
 \createtheorem{thmblackbox}{Problem}{theorem}{problem}
 \createtheorem{thmblackbox}{Axiom}{theorem}{axiom}
@@ -210,7 +264,6 @@
 
 \createtheorem*{thmblackbox}{Definition}{definition*}
 \createtheorem*{thmblackbox}{Question}{question*}
-\createtheorem*{thmblackbox}{Exercise}{exercise*}
 \createtheorem*{thmblackbox}{Condition}{condition*}
 \createtheorem*{thmblackbox}{Problem}{problem*}
 \createtheorem*{thmblackbox}{Axiom}{axiom*}
@@ -218,40 +271,48 @@
 \createtheorem*{thmblackbox}{Property}{property*}
 \createtheorem*{thmblackbox}{Assumption}{assumption*}
 \createtheorem*{thmblackbox}{Hypothesis}{hypothesis*}
-\createtheorem*{thmblackbox}{Joke}{joke*}
 
 \createtheorem{thmredbox}{Example}{theorem}{example}
+\createtheorem{thmredbox}{Exercise}{theorem}{exercise}
+
 \createtheorem*{thmredbox}{Example}{example*}
+\createtheorem*{thmredbox}{Exercise}{exercise*}
 
 % Remark-style theorems
 \theoremstyle{remark}
+
 \createtheorem{thmgreenbox}{Remark}{theorem}{remark}
 \createtheorem{thmgreenbox}{Note}{theorem}{note}
 \createtheorem{thmgreenbox}{Notation}{theorem}{notation}
 \createtheorem{thmgreenbox}{Claim}{theorem}{claim}
-\createtheorem{thmgreenbox}{Summary}{theorem}{summary}
 \createtheorem{thmgreenbox}{Acknowledgment}{theorem}{acknowledgment}
-\createtheorem{thmgreenbox}{Case}{theorem}{case}
 \createtheorem{thmgreenbox}{Conclusion}{theorem}{conclusion}
 \createtheorem{thmgreenbox}{Consequence}{theorem}{consequence}
 \createtheorem{thmgreenbox}{Generalization}{theorem}{generalization}
 \createtheorem{thmgreenbox}{Abuse of Notation}{theorem}{abuse}
 \createtheorem{thmgreenbox}{Aside}{theorem}{aside}
 \createtheorem{thmgreenbox}{Postulate}{theorem}{postulate}
-\createtheorem{thmgreenbox}{Goal}{theorem}{goal}
 
 \createtheorem*{thmgreenbox}{Remark}{remark*}
 \createtheorem*{thmgreenbox}{Note}{note*}
 \createtheorem*{thmgreenbox}{Notation}{notation*}
 \createtheorem*{thmgreenbox}{Claim}{claim*}
-\createtheorem*{thmgreenbox}{Summary}{summary*}
 \createtheorem*{thmgreenbox}{Acknowledgment}{acknowledgment*}
-\createtheorem*{thmgreenbox}{Case}{case*}
 \createtheorem*{thmgreenbox}{Conclusion}{conclusion*}
 \createtheorem*{thmgreenbox}{Consequence}{consequence*}
 \createtheorem*{thmgreenbox}{Generalization}{generalization*}
 \createtheorem*{thmgreenbox}{Abuse of Notation}{abuse*}
-\createtheorem*{thmgreenbox}{Recall}{recall*}
 \createtheorem*{thmgreenbox}{Aside}{aside*}
 \createtheorem*{thmgreenbox}{Postulate}{postulate*}
-\createtheorem*{thmgreenbox}{Goal}{goal*}
+
+\createtheorem{thmpurplebox}{Goal}{theorem}{goal}
+\createtheorem{thmpurplebox}{Summary}{theorem}{summary}
+
+\createtheorem*{thmpurplebox}{Goal}{goal*}
+\createtheorem*{thmpurplebox}{Summary}{summary*}
+\createtheorem*{thmpurplebox}{Recall}{recall*}
+
+\createtheorem{thmwhitebox}{Case}{theorem}{case}
+
+\createtheorem*{thmwhitebox}{Case}{case*}
+\createtheorem*{thmwhitebox}{Joke}{joke*}
