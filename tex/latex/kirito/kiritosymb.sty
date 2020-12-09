@@ -1,3 +1,4 @@
+\RequirePackage{amsmath}
 \ProvidesPackage{kiritosymb}
 
 %%fakesection Small commands
@@ -23,12 +24,6 @@
 \newcommand{\symprod}{\prod_{\mathrm{sym}}}
 
 %%fakesection From H113 "Introduction to Abstract Algebra" at UC Berkeley
-\newcommand{\CC}{\mathbb C}
-\newcommand{\FF}{\mathbb F}
-\newcommand{\NN}{\mathbb N}
-\newcommand{\QQ}{\mathbb Q}
-\newcommand{\RR}{\mathbb R}
-\newcommand{\ZZ}{\mathbb Z}
 \newcommand{\charin}{\text{ char }}
 \DeclareMathOperator{\sign}{sign}
 \DeclareMathOperator{\Aut}{Aut}
@@ -102,8 +97,17 @@
 \newcommand{\SH}{\mathscr H}
 \newcommand{\OO}{\mathcal O}
 
+%%fakesection Blackboard bold letters
+\newcommand{\bZ}{\mathbb Z}
+\newcommand{\bQ}{\mathbb Q}
+\newcommand{\bR}{\mathbb R}
+\newcommand{\bC}{\mathbb C}
+\newcommand{\bH}{\mathbb H}
+\newcommand{\bF}{\mathbb F}
+\newcommand{\bP}{\mathbb P}
+\newcommand{\bE}{\mathbb E}
+
 %%fakesection From MATH145 at UWaterloo
-\newcommand{\UU}{\mathcal U}
 \makeatletter
 \def\legendre@dash#1#2{\hb@xt@#1{%
   \kern-#2\p@
@@ -149,3 +153,5 @@
 %%fakesection from CO255 assignments at UWaterloo
 \newcommand*{\T}{{\mkern-1.5mu\mathsf{T}}}
 \DeclareMathOperator{\OPT}{OPT}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\cone}{cone}
