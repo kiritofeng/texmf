@@ -1,4 +1,4 @@
-\RequirePackage{amsmath}
+\RequirePackage{amsmath, kiritocmd}
 \ProvidesPackage{kiritosymb}
 
 %%fakesection Small commands
@@ -34,6 +34,8 @@
 \DeclareMathOperator{\SL}{SL} % Special linear group
 
 %%fakesection From Kiran Kedlaya's "Geometry Unbound"
+\providecommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\providecommand{\norm}[1]{\left\lVert #1 \right\rVert}
 \newcommand{\dang}{\measuredangle} %% Directed angle
 \newcommand{\ray}[1]{\overrightarrow{#1}}
 \newcommand{\seg}[1]{\overline{#1}}
@@ -65,6 +67,7 @@
 \DeclareMathOperator{\coker}{coker} % Cokernel
 \DeclareMathOperator{\Coker}{Coker} % Cokernel
 \DeclareMathOperator{\Ker}{Ker} % Kernel
+\ProvideMathOperator{\rank}{rank} % Rank
 \DeclareMathOperator{\Spec}{Spec} % spectrum
 \DeclareMathOperator{\pr}{pr} % projection
 \DeclareMathOperator{\ext}{ext} % extension
