@@ -1,5 +1,6 @@
 %% Package for typesetting OTIS materials
 
+\usepackage{graphicx}
 \usepackage{epic}
 \usepackage{xstring}
 \usepackage{amsthm}
@@ -13,20 +14,31 @@
 \DeclareOption{reveal}{\otisrevealtrue}
 \newif\ifotishandout\otishandoutfalse
 \DeclareOption{handout}{\otishandouttrue}
+\newif\ifotishandoutwalk\otishandoutwalktrue
+\DeclareOption{nowalk}{\otishandoutwalkfalse}
 \ProcessOptions\relax
 
+\newcommand{\logopath}{otis-logo-sm.png}
+\newcommand{\thelogo}{\includegraphics[width=6em]{\logopath}}
+\newcommand{\logo}[1]{\renewcommand{\thelogo}{#1}}
+
 \ifotisexam
-	\usepackage[nofancy]{evan}
-	\newcommand{\thelogo}{}
-	\newcommand{\logo}[1]{\renewcommand{\thelogo}{#1}}
+	\usepackage[nofancy,diagrams,sexy]{evan}
 	\usepackage{mdframed}
 
-	\makeatletter
-	\def\thm@space@setup{%
-	  \thm@preskip=\parskip \thm@postskip=18pt
-	}
-	\makeatother
-	\theoremstyle{definition}
+	\newtheoremstyle{problem}% name of the style to be used
+	{6pt}% measure of space to leave above the theorem. E.g.: 3pt
+	{24pt}% measure of space to leave below the theorem. E.g.: 3pt
+	{\normalfont}% name of font to use in the body of the theorem
+	{0pt}% measure of space to indent
+	{\bfseries}% name of head font
+	{.}% punctuation between head and body
+	{ }% space after theorem head; " " = normal interword space
+	{\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}
+	\theoremstyle{problem}
+	\newtheorem{jprob}{JMO}
+	\newtheorem{uprob}{USAMO}
+	\newtheorem{tprob}{TST}
 
 	\usepackage{fancyhdr}
 	\pagestyle{fancy}
@@ -61,41 +73,54 @@
 		{\sffamily \LARGE \textbf{\StrSubstitute{\jobname}{-}{ }}}
 			\par\vspace{1em}
 		}
-	\newcommand{\sevenpoints}{Time limit: 3.5 hours. \\
+	\newcommand{\sevenpoints}{Time limit: 4.5 hours. \\
 		Each problem is worth $7$ points.}
 
 	\usepackage{titlesec}
 	\titleformat{\section}[block]{\color{blue}\Large\bfseries\filcenter}{}{2em}{}
 \else
-	\usepackage[sexy]{evan}
-	\AtBeginDocument{\date{\MakeUppercase{\jobname}}%
-	\author{Evan Chen\thanks{Internal use:
-		Olympiad Training for Individual Study (OTIS).
-		Last update \today.}}%
-	}
+	\usepackage[sexy,diagrams]{evan}
+	\setkomafont{publishers}{\small}
+	\AtBeginDocument{\publishers{\MakeUppercase{\jobname},
+		OTIS\thanks{Internal use only.
+		Selected problems belong to their
+		respective authors and organizations, as attributed.
+		Otherwise, no part of this document may be reproduced
+		or transmitted in any form or by any means,
+		without prior written permission from the author.}}}%
+	\author{Evan Chen}
+	\titlehead{\includegraphics[width=2cm]{\logopath}\dotfill
+		\emph{\sffamily\Large Olympiad Training for Individual Study}}
 	\def\twodigits#1{\ifnum#1<10 0\fi\the#1}
 	\def\lastupdate{\leavevmode\hbox{\the\year-\twodigits\month-\twodigits\day}}
 	\renewcommand{\vonenvname}{example}
 	\ihead{\footnotesize\textbf{\theauthor} (OTIS, updated \lastupdate)}
 	\ohead{\footnotesize\textbf{\thetitle}}
+	% OTIS logo at bottom
+	\cfoot{}
+	\ifoot{\thelogo}
+	\ofoot{\thepage}
 
 	\newcommand{\clubs}[1]{\bgroup\color{blue!70!black}[$#1\clubsuit$]\egroup}
 	\newcommand{\clubr}[1]{\bgroup\color{red!80!black}[$#1\clubsuit$]\egroup}
 	\newcommand{\clubg}[1]{\bgroup\color{green!40!black}[$#1\clubsuit$]\egroup}
 	%\newcommand{\goal}[1]{Solve at least \clubg{#1} (more if you have time),
 	%	including any problem marked in {\color{red} red}.}
-	\newcommand{\goals}[2]{Solve at least \clubg{#1}.
-		If you are ambitious, aim for \clubg{#2} or more.
-		Problems whose weights are marked in {\color{red} red} are mandatory.}
+	\newcommand{\goals}[2]{\bgroup
+		\sffamily\small \emph{Instructions}: Solve \clubg{#1}.
+		If you have time, solve \clubg{#2}.
+		Problems with {\color{red} red} weights are mandatory.
+		\egroup\par}
 	\newtheorem{probOTIS}{Problem}
 	\newtheorem{probE}[probOTIS]{\clubs{2} Problem}
 	\newtheorem{probM}[probOTIS]{\clubs{3} Problem}
 	\newtheorem{probH}[probOTIS]{\clubs{5} Problem}
 	\newtheorem{probZ}[probOTIS]{\clubs{9} Problem}
-	\newtheorem{probER}[probOTIS]{\clubr{2} Problem}
-	\newtheorem{probMR}[probOTIS]{\clubr{3} Problem}
-	\newtheorem{probHR}[probOTIS]{\clubr{5} Problem}
-	\newtheorem{probZR}[probOTIS]{\clubr{9} Problem}
+	\newtheorem{probER}[probOTIS]{\clubr{2} Required Problem}
+	\newtheorem{probMR}[probOTIS]{\clubr{3} Required Problem}
+	\newtheorem{probHR}[probOTIS]{\clubr{5} Required Problem}
+	\newtheorem{probZR}[probOTIS]{\clubr{9} Required Problem}
+	\newtheorem*{probSurvey}{\clubs{1} Mini Survey}
 
 	\newcommand{\vonE}{\renewcommand{\vonenvname}{probE}\von}
 	\newcommand{\vonM}{\renewcommand{\vonenvname}{probM}\von}
@@ -108,7 +133,7 @@
 
 	\ifotishandout
 		% Walkthroughs to examples
-		\newtheorem*{walkthrough}{Walkthrough}
+		\newenvironment{walkthrough}{\noindent\textbf{\color{green!40!black}Walkthrough.}}{}
 		\usepackage{answers}
 
 		\def\vonX{\@ifstar\@vonXstar\@vonX}
@@ -151,11 +176,34 @@
 		\Newassociation{exanswer}{exitem}{exanswers}
 		\renewcommand{\solutionextension}{out}
 		\AtBeginDocument{\Opensolutionfile{exanswers}[von/exsol-\jobname]}
-		\AtEndDocument{\pagebreak
-		\Closesolutionfile{exanswers}
-		\section{Solutions to the walkthroughs}
-		\input{von/exsol-\jobname.out} %chktex 27
+		\AtEndDocument{
+			\begin{probSurvey}
+			At the end of your submission,
+			answer the following questions.
+			\begin{enumerate}[(a)]
+				\item About how many hours did the problem set take?
+				\item Name any problems that stood out
+				(e.g.\ especially nice, instructive,
+				boring, or unusually easy/hard for its placement).
+			\end{enumerate}
+			Any other thoughts are welcome too.
+			Examples: suggestions for new problems to add,
+			things I could explain better in the notes,
+			overall difficulty or usefulness of the unit.
+			\end{probSurvey}
 		}
+		\ifotishandoutwalk
+			\AtEndDocument{\pagebreak
+			\Closesolutionfile{exanswers}
+			\section{Solutions to the walkthroughs}
+			\input{von/exsol-\jobname.out} %chktex 27
+			}
+		\fi
+
+		\usepackage{epigraph}
+		%\renewcommand{\epigraphflush}{flushleft}
+		\renewcommand{\epigraphsize}{\scriptsize}
+		\renewcommand{\epigraphwidth}{60ex}
 	\fi
 \fi
 
