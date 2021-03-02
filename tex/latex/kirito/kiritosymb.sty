@@ -1,10 +1,29 @@
-\RequirePackage{amsmath, kiritocmd}
 \ProvidesPackage{kiritosymb}
+\RequirePackage{amsmath, kiritocmd}
+
+%%fakesection Argument processing
+% Default Arguments
+% We include "Kirito" in all of these to make sure
+% that they don't collide with anything in external packages
+\newif\ifkiritophysics\kiritophysicsfalse
+
+%Receive Arguments
+\DeclareOption{physics}{\kiritophysicstrue}
+\DeclareOption{nophysics}{\kiritophysicsfalse}
+
+\ProcessOptions\relax
+
+%%fakesection Include \`physics\`
+\ifkiritophysics
+  \RequirePackage{physics}
+\fi
 
 %%fakesection Small commands
 \newcommand{\cbrt}[1]{\sqrt[3]{#1}}
 \newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
 \newcommand{\ceiling}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\ol}{\overline}
 \newcommand{\wt}{\widetilde}
 \newcommand{\wh}{\widehat}
 \newcommand{\eps}{\varepsilon}
@@ -34,8 +53,10 @@
 \DeclareMathOperator{\SL}{SL} % Special linear group
 
 %%fakesection From Kiran Kedlaya's "Geometry Unbound"
-\providecommand{\abs}[1]{\left\lvert #1 \right\rvert}
-\providecommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\ifkiritophysics\else
+    \providecommand{\abs}[1]{\left\lvert #1 \right\rvert}
+    \providecommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\fi
 \newcommand{\dang}{\measuredangle} %% Directed angle
 \newcommand{\ray}[1]{\overrightarrow{#1}}
 \newcommand{\seg}[1]{\overline{#1}}
@@ -67,7 +88,9 @@
 \DeclareMathOperator{\coker}{coker} % Cokernel
 \DeclareMathOperator{\Coker}{Coker} % Cokernel
 \DeclareMathOperator{\Ker}{Ker} % Kernel
-\ProvideMathOperator{\rank}{rank} % Rank
+\ifkiritophysics\else
+    \DeclareMathOperator{\rank}{rank} % Rank
+\fi
 \DeclareMathOperator{\Spec}{Spec} % spectrum
 \DeclareMathOperator{\pr}{pr} % projection
 \DeclareMathOperator{\ext}{ext} % extension
