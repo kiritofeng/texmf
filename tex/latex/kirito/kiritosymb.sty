@@ -1,5 +1,5 @@
 \ProvidesPackage{kiritosymb}
-\RequirePackage{amsmath, kiritocmd}
+\RequirePackage{amsfonts, amsmath, kiritocmd}
 
 %%fakesection Argument processing
 % Default Arguments
@@ -185,7 +185,11 @@
 
 %%fakesection From CO444 lectures at UWaterloo
 \DeclareMathOperator{\Sym}{Sym}
+\DeclareMathOperator{\dist}{dist}
 \DeclareMathOperator{\PG}{PG}
+\ifkiritophysics\else
+  \DeclareMathOperator{\tr}{tr}
+\fi
 
 %%fakesection From CO452 lectures at UWaterloo
 \DeclareMathOperator{\aff}{aff}
