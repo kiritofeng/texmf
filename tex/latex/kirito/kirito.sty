@@ -145,7 +145,6 @@
 
 %Convenient Environments
 \newenvironment{soln}{\begin{proof}[Solution]}{\end{proof}}
-\newenvironment{motivation}{\begin{proof}[Motivation]\renewcommand{\qedsymbol}{}}{\end{proof}}
 \newenvironment{parlist}{\begin{inparaenum}[(i)]}{\end{inparaenum}}
 \newenvironment{gobble}{\setbox\z@\vbox\bgroup}{\egroup}
 
@@ -153,15 +152,6 @@
 \newenvironment{subproof}[1][Proof]{%
 \begin{proof}[#1] \renewcommand{\qedsymbol}{$\blacksquare$}}%
 {\end{proof}}
-
-%% Napkin commands
-\newcommand{\prototype}[1]{
-    \emph{{\color{red} Prototypical example for this section:} #1} \par\medskip
-}
-\newenvironment{moral}{%
-    \begin{mdframed}[linecolor=green!70!black]%
-    \bfseries\color{green!70!black}}%
-    {\end{mdframed}}
 
 %%fakesection Theorem setup
 \ifkiritothm
