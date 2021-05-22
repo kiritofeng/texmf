@@ -72,6 +72,7 @@
 \newif\ifkiritosibthm\kiritosibthmtrue
 \newif\ifkiritothmttl\kiritothmttltrue
 \newif\ifkiritophysics\kiritophysicsfalse
+\newif\ifkiritoindex\kiritoindexfalse
 
 %Receive Arguments
 \DeclareOption{chinese}{\kiritohreffalse\kiritochinesetrue} % Chinese support
@@ -122,6 +123,9 @@
 \DeclareOption{physics}{\kiritophysicstrue}
 \DeclareOption{nophysics}{\kiritophysicsfalse}
 
+\DeclareOption{index}{\kiritoindextrue}
+\DeclareOption{noindex}{\kiritoindexfalse}
+
 \ProcessOptions\relax
 
 % if packages not loaded, turn off mdthm and asy
@@ -131,7 +135,14 @@
 %%fakesection Some macros
 %Small commands
 \newcommand{\mailto}[1]{\href{mailto:#1}{\texttt{#1}}}
-\newcommand{\vocab}[1]{\textbf{\color{blue} #1}}
+\ifkiritoindex
+    %% We need to load this before hyperref
+    \usepackage{imakeidx}
+    \makeindex[intoc, options= -s kiritostyle.ist]
+    \newcommand{\vocab}[1]{\textbf{\color{blue} #1}\index{#1}}
+\else
+    \newcommand{\vocab}[1]{\textbf{\color{blue} #1}}
+\fi
 \newcommand{\hrulebar}{
   \par\hspace{\fill}\rule{0.95\linewidth}{.7pt}\hspace{\fill}
   \par\nointerlineskip \vspace{\baselineskip}
