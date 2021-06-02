@@ -137,9 +137,14 @@
 \newcommand{\mailto}[1]{\href{mailto:#1}{\texttt{#1}}}
 \ifkiritoindex
     %% We need to load this before hyperref
-    \usepackage{imakeidx}
+    \usepackage{imakeidx, xifthen}
     \makeindex[intoc, options= -s kiritostyle.ist]
-    \newcommand{\vocab}[1]{\textbf{\color{blue} #1}\index{#1}}
+    \newcommand{\vocab}[2][]{%
+      \ifthenelse{\isempty{#1}}{%
+        \textbf{\color{blue} #2}\index{#2}%
+      }{%
+        \textbf{\color{blue} #2}\index{#1}}%
+      }
 \else
     \newcommand{\vocab}[1]{\textbf{\color{blue} #1}}
 \fi
