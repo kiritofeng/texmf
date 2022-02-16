@@ -8,6 +8,7 @@
 % that they don't collide with anything in external packages
 \newif\ifkiritomdthm\kiritomdthmfalse
 \newif\ifkiritosecthm\kiritosecthmfalse
+\newif\ifkiritosubsecthm\kiritosubsecthmfalse
 \newif\ifkiritosibthm\kiritosibthmtrue
 \newif\ifkiritothmttl\kiritothmttltrue
 
@@ -16,6 +17,7 @@
 \DeclareOption{nomdthm}{\kiritomdthmfalse}
 
 \DeclareOption{secthm}{\kiritosecthmtrue}
+\DeclareOption{subsecthm}{\kiritosecthmtrue\kiritosubsecthmtrue}
 \DeclareOption{nosecthm}{\kiritosecthmfalse}
 
 \DeclareOption{sibthm}{\kiritosibthmtrue}
@@ -206,8 +208,13 @@
 \ifkiritomdthm
     \theoremstyle{plain}
     \ifkiritosecthm
-        \declaretheorem[%
-        style=thmbluebox,name=Theorem,numberwithin=section]{theorem}
+        \ifkiritosubsecthm
+            \declaretheorem[%
+            style=thmbluebox,name=Theorem,numberwithin=subsection]{theorem}
+        \else
+            \declaretheorem[%
+            style=thmbluebox,name=Theorem,numberwithin=section]{theorem}
+        \fi
     \else
         \declaretheorem[%
         style=thmbluebox,name=Theorem]{theorem}
