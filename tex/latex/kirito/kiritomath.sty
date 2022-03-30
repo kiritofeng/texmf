@@ -1,6 +1,6 @@
 \ProvidesPackage{kiritomath}
 
-\RequirePackage{amsmath, array}
+\RequirePackage{amsmath, array, tabularx}
 
 %%fakesection commands to typeset lines in matrices
 \newcommand*{\vertbar}{\rule[-1ex]{0.5pt}{3.5ex}}
@@ -20,15 +20,15 @@
 
 %%fakesection Add variable explanation environment
 \newenvironment{where}[1][Where]{%
-    \par\noindent\emph{#1:}\\*[\parskip]
+    \par\noindent\ignorespaces\emph{#1:}\\*[\parskip]
     \indent\begin{tabular}{>{$}r<{$} @{${}={}$} l}
 }{%
-    \end{tabular}
+    \end{tabular}\ignorespacesafterend
 }
 
 \newenvironment{where*}[1][Where]{%
-    \par\noindent\emph{#1:}\\*[\parskip]
+    \par\noindent\ignorespaces\emph{#1:}\\*[\parskip]
     \tabularx{\columnwidth}{>{$}r<{$} @{${}={}$} >{\raggedright\arraybackslash}X}
 }{%
-    \endtabularx
+    \endtabularx\ignorespacesafterend
 }
