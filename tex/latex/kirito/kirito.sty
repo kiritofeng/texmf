@@ -139,14 +139,20 @@
     %% We need to load this before hyperref
     \usepackage{imakeidx, xifthen}
     \makeindex[intoc, options= -s kiritostyle.ist]
-    \newcommand{\vocab}[2][]{%
-      \ifthenelse{\isempty{#1}}{%
-        \textbf{\color{blue} #2}\index{#2}%
-      }{%
-        \textbf{\color{blue} #2}\index{#1}}%
-      }
+    \newcommand*{\vocab}[2][]{%
+        \begingroup%
+        \providecommand*{\1}{#1}%
+        \providecommand*{\2}{#2}%
+        \renewcommand*{\1}{#1}%
+        \renewcommand*{\2}{#2}%
+        \ifthenelse{\isempty{#1}}{%
+            \textbf{\color{blue} #2}\index{#2}%
+        }{%
+            \textbf{\color{blue} #2}\index{#1}%
+        }%
+        \endgroup}
 \else
-    \newcommand{\vocab}[1]{\textbf{\color{blue} #1}}
+    \newcommand*{\vocab}[1]{\textbf{\color{blue} #1}}
 \fi
 \newcommand{\hrulebar}{
   \par\hspace{\fill}\rule{0.95\linewidth}{.7pt}\hspace{\fill}
