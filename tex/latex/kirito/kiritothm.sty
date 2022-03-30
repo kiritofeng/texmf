@@ -28,185 +28,51 @@
 
 \ProcessOptions\relax
 
-%%fakesection New Theorem Styles -- mdbluebox, mdredbox, mdgreenbox, mdblackbox, mdinlinebox
+%%fakesection New Theorem Styles -- thmbluebox, thmredbox, thmgreenbox, thmblackbox, thmpurplebox, thmwhitebox
 \ifkiritomdthm
-    \usepackage[framemethod=TikZ]{mdframed}
-
-    \mdfdefinestyle{mdbluebox}{%
-        skipabove=8pt,
-        linewidth=2pt,
-        rightline=false,
-        leftline=true,
-        topline=false,
-        bottomline=false,
-        linecolor=MidnightBlue,
-        backgroundcolor=TealBlue!5,
-        nobreak=true,
+    \RequirePackage{tcolorbox}
+    \tcbuselibrary{breakable,external,skins}
+    \tcbsetforeverylayer{
+        shield externalize,breakable,lines before break=2,enhanced,
+        sharp corners,boxrule=0pt, frame hidden,parbox=false,top=-0.25em,bottom=0.25em,
+        thmbluebox/.style={borderline west={2pt}{0pt}{MidnightBlue},colback=TealBlue!5},
+        thmredbox/.style={borderline west={2pt}{0pt}{RedViolet},colback=Thistle!15},
+        thmgreenbox/.style={borderline west={2pt}{0pt}{ForestGreen},colback=ForestGreen!5},
+        thmblackbox/.style={borderline west={2pt}{0pt}{black},colback=gray!10},
+        thmpurplebox/.style={borderline west={2pt}{0pt}{RoyalPurple!90},colback=Orchid!5},
+        thmwhitebox/.style={borderline west={2pt}{0pt}{black},colback=white},
     }
+
     \declaretheoremstyle[
-        headfont=\sffamily\bfseries\color{MidnightBlue},
-        mdframed={style=mdbluebox},
-        headpunct={\\[3pt]},
-        postheadspace={0pt}
+        headfont=\sffamily\bfseries\color{MidnightBlue},headpunct={\\*[3pt]},
     ]{thmbluebox}
 
-    \mdfdefinestyle{mdredbox}{%
-        skipabove=8pt,
-        linewidth=2pt,
-        rightline=false,
-        leftline=true,
-        topline=false,
-        bottomline=false,
-        linecolor=RedViolet,
-        backgroundcolor=Thistle!15,
-        nobreak=true,
-    }
     \declaretheoremstyle[
-        headfont=\bfseries\color{RedViolet!75!Black},
-        mdframed={style=mdredbox},
-        headpunct={\\[3pt]},
-        postheadspace={0pt},
+        headfont=\sffamily\bfseries\color{RedViolet!75!Black},headpunct={\\*[3pt]}
     ]{thmredbox}
 
-    \mdfdefinestyle{mdgreenbox}{%
-        linewidth=2pt,
-        skipabove=8pt,
-        rightline=false,
-        leftline=true,
-        topline=false,
-        bottomline=false,
-        linecolor=ForestGreen,
-        backgroundcolor=ForestGreen!5,
-        nobreak=true,
-    }
-    \ifkiritothmttl
-        \declaretheoremstyle[
-            headfont=\sffamily\bfseries\color{ForestGreen!70!Black},
-            spaceabove=0pt,
-            spacebelow=0pt,
-            mdframed={style=mdgreenbox},
-            headpunct={\\[3pt]},
-        ]{thmgreenbox}
-    \else
-        \declaretheoremstyle[
-            headfont=\sffamily\bfseries\color{ForestGreen!70!Black},
-            spaceabove=0pt,
-            spacebelow=0pt,
-            mdframed={style=mdgreenbox},
-        ]{thmgreenbox}
-    \fi
-
-    \mdfdefinestyle{mdblackbox}{%
-        skipabove=8pt,
-        linewidth=2pt,
-        rightline=false,
-        leftline=true,
-        topline=false,
-        bottomline=false,
-        linecolor=black,
-        backgroundcolor=gray!10,
-        nobreak=true,
-    }
-    \ifkiritothmttl
-        \declaretheoremstyle[
-            headfont=\bfseries,
-            spaceabove=0pt,
-            spacebelow=0pt,
-            mdframed={style=mdblackbox},
-            headpunct={\\[3pt]},
-        ]{thmblackbox}
-    \else
-        \declaretheoremstyle[
-            headfont=\bfseries,
-            spaceabove=0pt,
-            spacebelow=0pt,
-            mdframed={style=mdblackbox}
-        ]{thmblackbox}
-    \fi
-
-    \mdfdefinestyle{mdpurplebox}{%
-        skipabove=8pt,
-        linewidth=2pt,
-        rightline=false,
-        leftline=true,
-        topline=false,
-        bottomline=false,
-        linecolor=RoyalPurple!90,
-        backgroundcolor=Orchid!5,
-        nobreak=true,
-    }
-    \ifkiritothmttl
-        \declaretheoremstyle[
-            headfont=\sffamily\bfseries\color{RoyalPurple!90},
-            spaceabove=0pt,
-            spacebelow=0pt,
-            mdframed={style=mdpurplebox},
-            headpunct={\\[3pt]},
-        ]{thmpurplebox}
-    \else
-        \declaretheoremstyle[
-            headfont=\sffamily\bfseries\color{RoyalPurple!90},
-            headfont=\bfseries,
-            spaceabove=0pt,
-            spacebelow=0pt,
-            mdframed={style=mdpurplebox}
-        ]{thmpurplebox}
-    \fi
-
-    \mdfdefinestyle{mdwhitebox}{%
-        skipabove=8pt,
-        linewidth=2pt,
-        rightline=false,
-        leftline=true,
-        topline=false,
-        bottomline=false,
-        linecolor=black,
-        backgroundcolor=white,
-        nobreak=true,
-    }
-    \ifkiritothmttl
-        \declaretheoremstyle[
-            headfont=\bfseries,
-            spaceabove=0pt,
-            spacebelow=0pt,
-            mdframed={style=mdwhitebox},
-            headpunct={\\[3pt]},
-        ]{thmwhitebox}
-    \else
-        \declaretheoremstyle[
-            headfont=\bfseries,
-            spaceabove=0pt,
-            spacebelow=0pt,
-            mdframed={style=mdwhitebox}
-        ]{thmwhitebox}
-    \fi
-
-    \mdfdefinestyle{mdinlinebox}{%
-        skipabove=8pt,
-        linewidth=3pt,
-        rightline=false,
-        leftline=true,
-        topline=false,
-        bottomline=false,
-        linecolor=green,
-        backgroundcolor=green!2,
-        nobreak=true,
-    }
     \declaretheoremstyle[
-        headfont=\bfseries\color{Cerulean},
-        bodyfont=\normalfont\small,
-        spaceabove=0pt,
-        spacebelow=0pt,
-        mdframed={style=mdinlinebox}
-    ]{thminlinebox}
+        headfont=\sffamily\bfseries\color{ForestGreen!70!Black},headpunct={\\*[3pt]},
+    ]{thmgreenbox}
+
+    \declaretheoremstyle[
+        headfont=\sffamily\bfseries,headpunct={\\*[3pt]}
+    ]{thmblackbox}
+
+    \declaretheoremstyle[
+        headfont=\sffamily\bfseries\color{RoyalPurple!90},headpunct={\\*[3pt]},
+    ]{thmpurplebox}
+
+    \declaretheoremstyle[
+        headfont=\sffamily\bfseries\color{black},headpunct={\\*[3pt]},
+    ]{thmwhitebox}
 
     \newcommand{\listhack}{\leavevmode\vspace{-1.5\baselineskip}} % from asmthm usage guide 4.3.1
-
 \fi
 
 %%fakesection Theorem setup
 \ifkiritomdthm
-    \theoremstyle{plain}
+    %\theoremstyle{plain}
     \ifkiritosecthm
         \ifkiritosubsecthm
             \declaretheorem[%
@@ -219,13 +85,23 @@
         \declaretheorem[%
         style=thmbluebox,name=Theorem]{theorem}
     \fi
+    \tcolorboxenvironment{theorem}{thmbluebox}
     \makeatletter
         \newcommand*{\createtheorem}{\@ifstar\@createtheorem\@@createtheorem}
-        \newcommand*\@createtheorem[3]{\declaretheorem[style=#1,name=#2,numbered=no]{#3}}
+        \newcommand*\@createtheorem[3]{%
+            \declaretheorem[style=#1,name=#2,numbered=no]{#3}
+            \tcolorboxenvironment{#3}{#1}
+        }
         \ifkiritosibthm
-            \newcommand*\@@createtheorem[4]{\declaretheorem[style=#1,name=#2,sibling=#3]{#4}}
+            \newcommand*\@@createtheorem[4]{%
+                \declaretheorem[style=#1,name=#2,sibling=#3]{#4}
+                \tcolorboxenvironment{#4}{#1}
+            }
         \else
-            \newcommand*\@@createtheorem[4]{\declaretheorem[style=#1,name=#2]{#4}}
+            \newcommand*\@@createtheorem[4]{%
+                \declaretheorem[style=#1,name=#2]{#4}
+                \tcolorboxenvironment{#4}{#1}
+            }
         \fi
     \makeatother
 \else
