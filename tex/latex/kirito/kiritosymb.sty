@@ -212,3 +212,22 @@
 %%fakesection From CO330 lectures at UWaterloo
 \newcommand{\qbinom}[3]{\genfrac{[}{]}{0pt}{}{#1}{#2}_{#3}}
 \DeclareMathOperator{\area}{area}
+
+%%fakesection From CO431 lectures at UWaterloo
+\newcommand{\dotsubset}{
+  \mathchoice
+    {\mathrel{\ooalign{$\subset$\cr\hidewidth$\cdot$\hidewidth}}}% \displaystyle
+    {\mathrel{\ooalign{$\subset$\cr\hidewidth$\cdot$\hidewidth}}}% \textstyle
+    {\mathrel{\ooalign{$\scriptstyle\subset$\cr\hidewidth$\scriptstyle\cdot$\hidewidth}}}% \scriptstyle
+    {\mathrel{\ooalign{$\scriptscriptstyle\subset$\cr\hidewidth$\scriptscriptstyle\cdot$\hidewidth}}}% \scriptscriptstyle
+}
+\newcommand{\dotsupset}{
+  \mathchoice
+    {\mathrel{\ooalign{$\supset$\cr\hidewidth$\cdot$\hidewidth}}}% \displaystyle
+    {\mathrel{\ooalign{$\supset$\cr\hidewidth$\cdot$\hidewidth}}}% \textstyle
+    {\mathrel{\ooalign{$\scriptstyle\supset$\cr\hidewidth$\scriptstyle\cdot$\hidewidth}}}% \scriptstyle
+    {\mathrel{\ooalign{$\scriptscriptstyle\supset$\cr\hidewidth$\scriptscriptstyle\cdot$\hidewidth}}}% \scriptscriptstyle
+}
+
+%%fakesection From F22 CO439 Lectures at UWaterloo
+\DeclareMathOperator{\supp}{supp}
