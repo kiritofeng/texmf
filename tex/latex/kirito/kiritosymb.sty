@@ -110,7 +110,11 @@
 \DeclareMathOperator{\Ext}{Ext} % Ext functor
 \DeclareMathOperator{\Tor}{Tor} % Tor functor
 \newcommand{\gl}{\opname{\mathfrak{gl}}} % frak gl group
-\renewcommand{\sl}{\opname{\mathfrak{sl}}} % frak sl group
+\ifdefined\sl % 2022-11-02: GitHub actions compile requires this now
+  \renewcommand{\sl}{\opname{\mathfrak{sl}}} % frak sl group
+\else
+  \newcommand{\sl}{\opname{\mathfrak{sl}}} % frak sl group
+\fi
 
 %%fakesection More script letters etc.
 \newcommand{\SA}{\mathscr A}
