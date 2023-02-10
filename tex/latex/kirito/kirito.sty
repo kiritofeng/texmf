@@ -64,9 +64,7 @@
 \newif\ifkiritochinese\kiritochinesefalse
 \newif\ifkiritomdthm\kiritomdthmfalse
 \newif\ifkiritodiagrams\kiritodiagramsfalse
-\newif\ifkiritopatchasy\kiritopatchasyfalse
 \newif\ifkiritohints\kiritohintsfalse
-\newif\ifkiritoasy\kiritoasytrue
 \newif\ifkiritocolorsec\kiritocolorsecfalse
 \newif\ifkiritotitlemark\kiritotitlemarktrue
 \newif\ifkiritosibthm\kiritosibthmtrue
@@ -109,9 +107,6 @@
 \DeclareOption{colorsec}{\kiritocolorsectrue}
 \DeclareOption{nocolorsec}{\kiritocolorsecfalse}
 
-\DeclareOption{patchasy}{\kiritopatchasytrue}
-\DeclareOption{noasy}{\kiritoasyfalse}
-
 \DeclareOption{hints}{\kiritohintstrue}
 
 \DeclareOption{sibthm}{\kiritosibthmtrue}
@@ -128,9 +123,8 @@
 
 \ProcessOptions\relax
 
-% if packages not loaded, turn off mdthm and asy
+% if packages not loaded, turn off mdthm
 \ifkiritopkg\else\kiritomdthmfalse\fi
-\ifkiritopkg\else\kiritoasyfalse\fi
 
 %%fakesection Some macros
 %Small commands
@@ -208,59 +202,6 @@
     \PassOptionsToPackage{nophysics}{kiritosymb}
 \fi
 \RequirePackage{kiritosymb}
-%%fakesection Asymptote setup
-\ifkiritoasy
-    \ifkiritopatchasy
-        \usepackage{patch-asy}
-    \else
-        \usepackage{asymptote}
-    \fi
-    \begin{asydef}
-        defaultpen(fontsize(10pt));
-        size(8cm); // set a reasonable default
-        usepackage("amsmath");
-        usepackage("amssymb");
-        settings.tex="pdflatex";
-        settings.outformat="pdf";
-        // Replacement for olympiad+cse5 which is not standard
-        import geometry;
-        // recalibrate fill and filldraw for conics
-        void filldraw(picture pic = currentpicture, conic g, pen fillpen=defaultpen, pen drawpen=defaultpen)
-            { filldraw(pic, (path) g, fillpen, drawpen); }
-        void fill(picture pic = currentpicture, conic g, pen p=defaultpen)
-            { filldraw(pic, (path) g, p); }
-        // some geometry
-        pair foot(pair P, pair A, pair B) { return foot(triangle(A,B,P).VC); }
-        pair orthocenter(pair A, pair B, pair C) { return orthocentercenter(A,B,C); }
-        pair centroid(pair A, pair B, pair C) { return (A+B+C)/3; }
-        // cse5 abbrevations
-        path CP(pair P, pair A) { return circle(P, abs(A-P)); }
-        path CR(pair P, real r) { return circle(P, r); }
-        pair IP(path p, path q) { return intersectionpoints(p,q)[0]; }
-        pair OP(path p, path q) { return intersectionpoints(p,q)[1]; }
-        path Line(pair A, pair B, real a=0.6, real b=a) { return (a*(A-B)+A)--(b*(B-A)+B); }
-        // cse5 more useful functions
-        picture CC() {
-            picture p=rotate(0)*currentpicture;
-            currentpicture.erase();
-            return p;
-        }
-        pair MP(Label s, pair A, pair B = plain.S, pen p = defaultpen) {
-            Label L = s;
-            L.s = "$"+s.s+"$";
-            label(L, A, B, p);
-            return A;
-        }
-        pair Drawing(Label s = "", pair A, pair B = plain.S, pen p = defaultpen) {
-            dot(MP(s, A, B, p), p);
-            return A;
-        }
-        path Drawing(path g, pen p = defaultpen, arrowbar ar = None) {
-            draw(g, p, ar);
-            return g;
-        }
-    \end{asydef}
-\fi
 
 %%fakesection BEGIN MAIN SETUP
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -446,17 +387,6 @@
             \fi
             \cfoot{\pagemark}
         }
-    \fi
-
-    %%fakesection Chinese support
-    \ifkiritochinese
-        \usepackage[encapsulated]{CJK}
-        \usepackage{ucs}
-        \usepackage[utf8x]{inputenc}
-        \newenvironment{bsmi}{\begin{CJK}{UTF8}{bsmi}}{\end{CJK}}
-        \newcommand{\cn}[1]{\begin{bsmi}#1\end{bsmi}}
-        \AtBeginDocument{\begin{CJK}{UTF8}{bsmi}}
-        \AtEndDocument{\end{CJK}}
     \fi
 
     %%fakesection Hints
