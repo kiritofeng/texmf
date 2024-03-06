@@ -1,4 +1,5 @@
 \RequirePackage{tikz}
+\usetikzlibrary{decorations.markings}
 \newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
 
 % code from https://tex.stackexchange.com/questions/327007/tikz-fill-not-being-drawn-using-named-coordinates
@@ -22,4 +23,20 @@
 }
 \makeatother
 
+% code from https://tex.stackexchange.com/questions/443017/equal-arrows-without-transparent-ends-possible-in-tikzcd
+\tikzset{double line with arrow/.style args={#1,#2}{decorate,decoration={markings,%
+mark=at position 0 with {\coordinate (ta-base-1) at (0,1pt);
+\coordinate (ta-base-2) at (0,-1pt);},
+mark=at position 1 with {\draw[#1] (ta-base-1) -- (0,1pt);
+\draw[#2] (ta-base-2) -- (0,-1pt);
+}}}}
+\tikzset{Equal/.style={-,double line with arrow={-,-}}}
 
+% code from from https://tex.stackexchange.com/a/216042/
+\tikzset{
+  symbol/.style={
+    draw=none,
+    every to/.append style={
+      edge node={node [sloped, allow upside down, auto=false]{$#1$}}}
+  }
+}
