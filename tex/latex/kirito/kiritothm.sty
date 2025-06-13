@@ -107,7 +107,11 @@
     \makeatother
 \else
     \ifkiritosecthm
-        \newtheorem{theorem}{Theorem}[section]
+        \ifkiritosubsecthm
+            \newtheorem{theorem}{Theorem}[subsection]
+        \else
+            \newtheorem{theorem}{Theorem}[section]
+        \fi
     \else
         \newtheorem{theorem}{Theorem}
     \fi

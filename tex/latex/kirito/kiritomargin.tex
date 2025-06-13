@@ -1,0 +1,7 @@
+\ProvidesPackage{kiritomargin}
+\RequirePackage{marginnote,marginfix}
+\setlength{marginparpush}{1em}
+\newcommand*{\mnote}[2][0pt]{\marginnote{\footnotesize #2}[#1]}
+\newcommand*{\rmnote}[2][0pt]{\reversemarginpar{}\marginnote{\footnotesize #2}[#1]\normalmarginpar{}}
+\newcommand{\lecture}[1]{\reversemarginpar\marginnote{\ttfamily\footnotesize{}#1}\normalmarginpar}
+

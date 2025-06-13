@@ -1,5 +1,5 @@
 \ProvidesPackage{kiritosymb}
-\RequirePackage{amsfonts, amsmath, kiritocmd}
+\RequirePackage{amsfonts, amsmath, amssymb, kiritocmd, nicefrac}
 
 %%fakesection Argument processing
 % Default Arguments
@@ -28,7 +28,13 @@
 \newcommand{\wh}{\widehat}
 \newcommand{\eps}{\varepsilon}
 \newcommand{\catname}{\mathsf}
-\newcommand{\half}{\frac{1}{2}}
+\newcommand{\half}{%
+  {\mathchoice
+    {{\frac{1}{2}}}% \displaystyle
+    {{\nicefrac{1}{2}}}% \textstyle
+    {{\nicefrac{1}{2}}}% \scriptstyle
+    {{\nicefrac{1}{2}}}% \scriptscriptstyle
+}}
 
 %%fakesection More commands and math operators
 \DeclareMathOperator{\cis}{cis}
@@ -146,6 +152,7 @@
 \newcommand{\cP}{\mathcal P}
 \newcommand{\cT}{\mathcal T}
 \newcommand{\cU}{\mathcal U}
+\newcommand{\cZ}{\mathcal Z}
 
 %%fakesection Blackboard bold letters
 \newcommand{\bA}{\mathbb A}
@@ -228,7 +235,7 @@
 \newcommand{\symdiff}{\ensuremath{\mathbin{\triangle}}}
 
 %%fakesection From CO330 lectures at UWaterloo
-\newcommand{\qbinom}[3]{\genfrac{[}{]}{0pt}{}{#1}{#2}_{#3}}
+\newcommand{\qbinom}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}}
 \DeclareMathOperator{\area}{area}
 
 %%fakesection From CO431 lectures at UWaterloo
@@ -254,3 +261,6 @@
 
 %%fakesection From W25 PMATH945 lectures at UWaterloo
 \DeclareMathOperator*{\colim}{colim}
+
+%%fakesection From W25 CO630 lectures wt UWaterloo
+\newcommand{\bijw}{\rightleftharpoons}
